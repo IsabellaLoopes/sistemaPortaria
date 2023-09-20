@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app version="4.0" 
+		 xmlns="https://xmlns.jcp.org/xml/ns/javaee"
+		 xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="https://xmlns.jcp.org/xml/ns/javaee https://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd">
+   
+  <display-name>PortariaQrCode</display-name>
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+  </welcome-file-list>
+
+	<context-param>
+		<param-name>
+            org.apache.tiles.definition.DefinitionsFactory.DEFINITIONS_CONFIG
+        </param-name>
+		<param-value>
+            /WEB-INF/tiles-defs.xml
+        </param-value>
+    </context-param>
+ 
+	<listener>
+	    <listener-class>org.apache.tiles.extras.complete.CompleteAutoloadTilesListener</listener-class>
+	</listener>
+	 
+
+	<!-- <servlet>	
+	   	<servlet-name>InicializaServlet</servlet-name>
+	    <servlet-class>br.com.cooperflora.comercial.novo.servlet.InicializaServlet</servlet-class>
+	    <init-param>
+	    	<param-name>apiUrl</param-name>
+	    	<param-value>http://localhost:8080/servidor-mobile</param-value>
+	    </init-param>
+	    <load-on-startup>1</load-on-startup>		    
+	</servlet>  -->
+	
+</web-app>

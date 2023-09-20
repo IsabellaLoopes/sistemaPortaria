@@ -1,0 +1,221 @@
+@font-face {
+	font-family: 'Poetsen';
+	src: url('font/PoetsenOne-Regular.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'PublicSans_Bold';
+	src: url('font/PublicSans-ExtraBold.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'PublicSans';
+	src: url('font/PublicSans-Regular.ttf') format('truetype');
+	font-weight: bold;
+	font-style: normal;
+}
+
+@font-face {
+	font-family: 'Roboto';
+	src: url('font/Roboto-Medium.ttf') format('truetype');
+	font-weight: normal;
+	font-style: normal;
+}
+
+.color-primary {
+	color: #0078F0;
+}
+
+.bgColor-primary {
+	background-color: #0078F0;
+}
+
+.btn-formulario{
+	font-family:Roboto; 
+	width:90%; 
+	font-size:80%;
+	margin:15% 0% 5%;
+}
+
+/* usado para centralizar vertical e horizontal */
+.block {
+	text-align: center;
+}
+
+.block:before {
+	content: '';
+	display: inline-block;
+	height: 100%;
+	vertical-align: middle;
+	margin-right: -0.25em;
+}
+
+.centered {
+	display: inline-block;
+	vertical-align: middle;
+	width: 300px;
+}
+
+#div-login {
+	width: 30%;
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0
+		rgba(0, 0, 0, 0.19);
+}
+
+#div-login h1 {
+	font-size: 110%;
+	color: black;
+	opacity: 0.75;
+	font-family: 'Poetsen', Times, serif;
+}
+
+#div-login #p-login {
+	font-family: 'PublicSans';
+	font-size: 70%;
+	margin-top: 15%
+}
+
+#form-login{
+	width: 60%
+}
+
+.input-group {
+	position: relative;
+	margin-top:10%;
+	padding-top:10%;
+	transition: opacity 0.3s ease-in-out;
+	width:100%;
+}
+
+.input-group input {
+	position: relative;
+	width: 100%;
+	border: none;
+	font-size: 83%;
+	font-family: 'PublicSans';
+	font-weight: bold;
+	outline: 0;
+	background: transparent;
+	box-shadow: none;
+}
+
+.input-group .input-label {
+	position: absolute;
+	left: 0 !important;
+	transition: 0.2s ease-in-out;
+	font-family: 'PublicSans';
+	font-size: 83%;
+	font-weight: normal;
+}
+
+.icone-form{
+	width:100%;
+	margin-top:-10%
+}
+.icone-i{
+	font-size: 83%;
+	float: right !important
+}
+
+.input-group input:valid+.input-label {
+	top: 6px;
+	margin-left: 0 !important;
+	font-size: 11px;
+	color: #9e9e9e;
+}
+
+.input-progress {
+	border-bottom: 1px solid rgba(0, 0, 0, 0.25);
+	width: 100%;
+	transition: width 0.6s ease-in-out;
+}
+
+#modal-primeiros-passos h1 {
+	font-size: 110%;
+	color: white;
+	font-family: 'Poetsen', Times, serif;
+}
+
+#modal-primeiros-passos #p-login {
+	font-family: 'PublicSans';
+	font-size: 70%;
+	margin-top: 12%;
+	color:white
+}
+
+.btn-primeirosPassos{
+	font-family:Roboto; 
+	/*width:90%; */
+	font-size:80%;
+	margin: 3% 0% 35%;
+	background-color: white;
+	border-radius: 50px;
+}
+
+.modal div{
+	border:none !important;
+	border-radius: 50px;
+}
+
+.modal img{
+	width:100%;
+	border-radius: 50px;
+}
+
+.formPesquisa input{
+	float: center;
+	border-radius: 50px;
+	height:27px;
+	font-size: 12px;
+	font-family: 'PublicSans';
+}
+
+.containerForm{
+	border-radius: 30px;
+	border: 1px solid rgba(0, 0, 0, 0.15);
+	margin-left:14%;
+	margin-right:5%;
+	padding: 2%;
+}
+
+.nomeTopo{
+	font-size: 200%;
+	color: #0078F0;
+	font-family: 'Poetsen', Times, serif;
+	margin-left:15%;
+	margin-top:30px;
+}
+
+.containerForm select{
+	float: center;
+	border-radius: 50px;
+	height:27px;
+	font-size: 12px;
+	font-family: 'PublicSans';
+}
+
+.formPesquisa label{
+	font-family: 'PublicSans_Bold';
+	font-size: 80%;
+}
+
+.btn-form{
+	font-family:Roboto; 
+	font-size:76%;
+	margin: 3% 0% 0%;
+	background-color: #0078F0;
+	border-radius: 50px;
+	color: white;
+	width: auto;
+	margin-left: calc(var(--bs-gutter-x) * .5);
+}
+
+.btn-form:hover{
+	background-color: white;
+	color: #0078F0;
+	border: 1px solid #0078F0;
+}

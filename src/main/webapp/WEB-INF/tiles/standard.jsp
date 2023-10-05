@@ -8,7 +8,6 @@
 	<link rel="icon" href="${pageContext.request.contextPath}/img/icone_cadeado.png"/>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
-	
 	<title><tiles:getAsString name="title" /></title>
 	<tiles:insertAttribute name="cssBlock"></tiles:insertAttribute>
 	
@@ -16,6 +15,8 @@
 		const CONTEXT = "${pageContext.request.contextPath}";
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 	
 	<jsp:include page="/WEB-INF/jsp/util/validacao.jsp" />
 	<jsp:include page="/WEB-INF/jsp/util/util.jsp" />
@@ -28,7 +29,7 @@
 	<section id="conteudo">
 		<tiles:insertAttribute name="body" />
 
-		<div id="table-responsive"></div>
+		<div class="mt-3 containerForm" id="table-responsive"></div>
 		<div id="modal-responsive"></div>
 	</section>
 

@@ -1,4 +1,5 @@
 <script>
+
 function paginaPrincipal(){	
 	$("#modal-primeiros-passos").modal("hide");
 	 window.location.href = CONTEXT + "/home"
@@ -34,5 +35,9 @@ function abrirPagina(url, tipo=false, params={}, newPage=false){
 		document.body.appendChild(form);
 	    form.submit();
 	} 	
+}
+
+function fecharModal(id){
+	$("#"+id).modal("hide");
 }
 </script>

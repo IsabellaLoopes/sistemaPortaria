@@ -84,7 +84,7 @@ a.dropdown {
 			<div class="input-progress"></div>
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item" href="#"
-					onclick="javaScript: abrirPagina('/adm/usuario')">Usuário</a></li>
+					onclick="javaScript: abrirPagina('/adm/usuarioCabecalho')">Usuário</a></li>
 				<li><a class="dropdown-item" href="#">Menu e Permissão
 						Sistema</a></li>
 			</ul>

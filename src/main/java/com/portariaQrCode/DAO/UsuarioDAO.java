@@ -16,4 +16,17 @@ public class UsuarioDAO {
 				new Object[] {param.getAsStringOrValue("status", "")});
 	}
 
+	public Registro salvarUsuario(Registro param) {
+		return dao.getRowAsRegistro("EXEC cadastro.salvarUsuario @id=?, @nome=?, @tipo=?, @email=?, @telParticular=?, @telCorporativo=?, @senha=?, @status=?, @cpf=?, @cnpj=?, @documento=?, @foto=?",
+				new Object[] {param.getAsIntOrZero("id"), param.getAsString("nome"), param.getAsString("tipoPessoa"), 
+						param.getAsString("email"), param.getAsString("telParticular"), param.getAsString("telCorporativo"), 
+						param.getAsStringOrValue("senha", "senha"), param.getAsStringOrValue("status", "S"), param.getAsString("cpf"),
+						param.getAsString("cnpj"), param.getAsString("documento"), param.getAsString("foto")});
+	}
+	
+	public List<Registro> listarUsuario(Registro param) {
+		return dao.listaRowAsRegistro("EXEC cadastro.listarUsuario @nome=?, @tipo=?, @status=?, @cpf=?", 
+				new Object[] {param.getAsStringOrValue("nome", ""), param.getAsStringOrValue("tipo", ""),
+						param.getAsStringOrValue("status", ""), param.getAsStringOrValue("cpf", "")});
+	}
 }

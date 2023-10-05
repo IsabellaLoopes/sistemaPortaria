@@ -187,7 +187,7 @@
 	color: #0078F0;
 	font-family: 'Poetsen', Times, serif;
 	margin-left:15%;
-	margin-top:30px;
+	margin-top:20px;
 }
 
 .containerForm select{
@@ -218,4 +218,21 @@
 	background-color: white;
 	color: #0078F0;
 	border: 1px solid #0078F0;
+}
+
+.btn-form-close{
+	font-family:Roboto; 
+	font-size:76%;
+	margin: 3% 0% 0%;
+	border-radius: 50px;
+	width: auto;
+	margin-left: calc(var(--bs-gutter-x) * .5);
+}
+
+form select{
+	float: center;
+	border-radius: 50px !important;
+	height:27px;
+	font-size: 12px !important;
+	font-family: 'PublicSans';
 }

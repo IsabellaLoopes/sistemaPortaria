@@ -17,7 +17,7 @@
 							class="form-control" type="text" />
 					</div>
 					<div class="col-12 col-sm-12 col-md-5 col-lg-4">
-						<label for="codigo"><b>Código:</b></label> <input id="codigo"
+						<label for="cpf"><b>CPF:</b></label> <input id="cpf"
 							class="form-control" type="text" />
 					</div>
 					<div class="col-12 col-sm-12 col-md-2 col-lg-2">
@@ -39,10 +39,10 @@
 					</div>
 				</div>
 				<div class="row">
-					<button type="button" class="btn btn-form" onclick="pesquisar()">
+					<button type="button" class="btn btn-form" onclick="pesquisarUsuario()">
 						Pesquisar <i class="fa fa-search"></i>
 					</button>
-					<button type="button" class="btn btn-form" onclick="incluir()">
+					<button type="button" class="btn btn-form" onclick="incluirUsuario()">
 						Incluir <i class="fa fa-plus"></i>
 					</button>
 				</div>
@@ -54,6 +54,23 @@
 		$(document).ready(function(){
 			menuPequeno();
 		})
+		
+		function incluirUsuario(){
+			$("#modal-responsive").load("${pageContext.request.contextPath}/adm/usuarioIncluir", function(){
+				$("#modal-incluir-usuario").modal("show");
+			});
+		}
+		
+		function pesquisarUsuario(){
+			let param = {
+					nome: $("#usuario #nome").val(),
+					tipo: $("#usuario #tipoPessoa").val(),
+					cpf: $("#usuario #cpf").val(),
+					status: $("#usuario #status").val(),
+			}
+			$("#table-responsive").empty();
+			$("#table-responsive").load("${pageContext.request.contextPath}/adm/usuarioListar", param);
+		}
 		</script>
 	</tiles:putAttribute>
 </tiles:insertDefinition>

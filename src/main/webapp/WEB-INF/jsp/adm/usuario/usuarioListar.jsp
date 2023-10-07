@@ -2,7 +2,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 	<!-- Titulo da pgina -->
-	<div class="table-responsive-lg pb-5">
+	<div class="table-responsive-lg pb-5 containerForm">
 		<c:choose>
 			<c:when test="${empty dados.LISTA}">
 				<p>Não foi possível encontrar nenhum registro!</p>

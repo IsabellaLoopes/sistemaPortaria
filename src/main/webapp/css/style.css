@@ -236,3 +236,13 @@ form select{
 	font-size: 12px !important;
 	font-family: 'PublicSans';
 }
+
+th{
+	font-family: 'PublicSans_Bold';
+	font-size: 80%;
+}
+
+td{
+	font-family: 'PublicSans';
+	font-size: 80%;
+}

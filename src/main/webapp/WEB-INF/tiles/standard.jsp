@@ -29,7 +29,7 @@
 	<section id="conteudo">
 		<tiles:insertAttribute name="body" />
 
-		<div class="mt-3 containerForm" id="table-responsive"></div>
+		<div class="mt-3" id="table-responsive"></div>
 		<div id="modal-responsive"></div>
 	</section>
 

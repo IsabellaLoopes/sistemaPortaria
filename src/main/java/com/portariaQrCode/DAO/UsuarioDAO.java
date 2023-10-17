@@ -25,8 +25,14 @@ public class UsuarioDAO {
 	}
 	
 	public List<Registro> listarUsuario(Registro param) {
-		return dao.listaRowAsRegistro("EXEC cadastro.listarUsuario @nome=?, @tipo=?, @status=?, @cpf=?", 
+		return dao.listaRowAsRegistro("EXEC cadastro.listarUsuario @nome=?, @tipo=?, @status=?, @cpf=?, @id=?", 
 				new Object[] {param.getAsStringOrValue("nome", ""), param.getAsStringOrValue("tipo", ""),
-						param.getAsStringOrValue("status", ""), param.getAsStringOrValue("cpf", "")});
+						param.getAsStringOrValue("status", ""), param.getAsStringOrValue("cpf", ""), 
+						param.getAsIntOrZero("id")});
+	}
+	
+	public Registro alteraStatusUsuario(Registro param) {
+		return dao.getRowAsRegistro("EXEC cadastro.alteraStatusUsuario @id=?, @status=?",
+				new Object[] {param.getAsIntOrZero("id"), param.getAsString("status")});
 	}
 }

@@ -8,6 +8,7 @@
 	<link rel="icon" href="${pageContext.request.contextPath}/img/icone_cadeado.png"/>
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
 	<link rel="stylesheet" href="${pageContext.request.contextPath}/css/style.css" />
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
 	<title><tiles:getAsString name="title" /></title>
 	<tiles:insertAttribute name="cssBlock"></tiles:insertAttribute>
 	
@@ -15,6 +16,7 @@
 		const CONTEXT = "${pageContext.request.contextPath}";
 	</script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.10/jquery.mask.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 	

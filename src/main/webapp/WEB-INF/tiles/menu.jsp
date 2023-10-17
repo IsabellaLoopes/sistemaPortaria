@@ -85,7 +85,8 @@ a.dropdown {
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item" href="#"
 					onclick="javaScript: abrirPagina('/adm/usuarioCabecalho')">Usuário</a></li>
-				<li><a class="dropdown-item" href="#">Menu e Permissão
+				<li><a class="dropdown-item" href="#" 
+					onclick="javaScript: abrirPagina('/adm/menuCabecalho')">Menu e Permissão
 						Sistema</a></li>
 			</ul>
 		</div>

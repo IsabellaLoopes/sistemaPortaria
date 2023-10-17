@@ -11,13 +11,8 @@
 				<table class="table" id="tb-especie">
 		          <thead>
 		            <tr>
-		              <th scope="col">Nome</th>
-		              <th scope="col">E-mail</th>
-		              <th scope="col">CPF</th>
-		              <th scope="col">CNPJ</th>
-		              <th scope="col">Tel. Pessoal</th>
-		              <th scope="col">Tel. Coorporativo</th>
-		              <th scope="col">Tipo</th>
+		              <th scope="col">Menu</th>
+		              <th scope="col">SubMenu</th>
 		              <th scope="col">Status</th>
 		              <th scope="col">Ações</th>
 		            </tr>
@@ -25,21 +20,17 @@
 		          <tbody>
 		          	<c:forEach items="${dados.LISTA}" var="l">
 		          		<tr>
-		          			<td>${l.usr_nome}</td>
-		          			<td>${l.usr_email}</td>
-		          			<td>${l.usr_cpf}</td>
-		          			<td>${l.usr_cnpj}</td>
-		          			<td>${l.usr_telParticular}</td>
-		          			<td>${l.usr_telCorporativo}</td>
-		          			<td>${l.tip_descricao}</td>
-		          			<td>							
-								<div class="form-check form-switch">
-									<input class="form-check-input" style="cursor: pointer;" type="checkbox" id="switchAtivo${l.usr_id}" <c:if test="${l.usr_statusDesc eq 'Ativo'}">checked</c:if> onchange="ativaInativaUsuario(${l.usr_id})">
-									<label class="form-check-label" for="switchAtivo${l.usr_id}"></label>
+		          			<td><c:if test="${l.men_menu == 0}">${l.men_descricao}</c:if></td>
+		          			<td><c:if test="${l.men_menu != 0}">${l.men_descricao}</c:if></td>
+		          			<td>
+		          				<div class="form-check form-switch">
+									<input class="form-check-input" style="cursor: pointer;" type="checkbox" id="switchAtivo${l.men_id}" <c:if test="${l.men_status eq 'S'}">checked</c:if> onchange="ativaInativaMenu(${l.men_id})">
+									<label class="form-check-label" for="switchAtivo${l.men_id}"></label>
 								</div>
 		          			</td>
 		          			<td>
 		          				<a href="javascript: editarUsuario(${l.usr_id})" class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
+		          				<a href="javascript: editarUsuario(${l.usr_id})" class="btn btn-sm"><i class="bi bi-key-fill"></i></a>
 		          			</td>
 		          		</tr>
 		          	</c:forEach>
@@ -53,13 +44,13 @@ $(document).ready(function (){
 	//configurarTabela('tb-especie', false, false, false);
 })
 
-function ativaInativaUsuario(id){
+function ativaInativaMenu(id){
 	let param = {
 			id: id,
 			status: $("#switchAtivo"+id).attr("checked")=="checked" ? "N" : "S"
 	}
 	
-	$.post("${pageContext.request.contextPath}/adm/statusUsuario", param, function(retorno){
+	$.post("${pageContext.request.contextPath}/adm/statusMenu", param, function(retorno){
 		let obj = JSON.parse(retorno);
 		
 		if(obj.DATA.erro == 0){

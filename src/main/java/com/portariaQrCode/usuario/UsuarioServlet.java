@@ -24,7 +24,8 @@ import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
 
 @WebServlet(description = "Usuario", loadOnStartup = 5, urlPatterns = {"/adm/usuarioCabecalho", 
-						"/adm/usuarioIncluir", "/adm/usuarioSalvar", "/adm/usuarioListar"})
+						"/adm/usuarioIncluir", "/adm/usuarioSalvar", "/adm/usuarioListar", "/adm/statusUsuario",
+						"/adm/usuarioEditar"})
 public class UsuarioServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -45,9 +46,15 @@ public class UsuarioServlet extends HttpServlet {
 		if(req.getRequestURI().indexOf("adm/usuarioSalvar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			processarDados(req, resp, HttpServices.HTTP_POST, "", "salvar");
-		} else if(req.getRequestURI().indexOf("adm/usuarioListar") > 0) {
+		} else if(req.getRequestURI().indexOf("adm/statusUsuario") > 0){
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			processarDados(req, resp, HttpServices.HTTP_POST, "", "status");
+		}else if(req.getRequestURI().indexOf("adm/usuarioListar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/adm/usuario/usuarioListar.jsp", "listar");
+		}else if(req.getRequestURI().indexOf("adm/usuarioEditar") > 0) {
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/adm/usuario/usuarioEditar.jsp", "listarPorId");
 		}
 	}
 	
@@ -65,6 +72,8 @@ public class UsuarioServlet extends HttpServlet {
 				retorno.put("DATA", usuarioIncluir(dao, param)); 
 			} else if(banco.equals("listar")) {
 				retorno.put("LISTA", usuarioListar(dao, param));
+			} else if(banco.equals("listarPorId")) {
+				retorno.put("DATA", listarPorId(dao, param));
 			}	
 			
 			retorno.put("PARAMETROS", param);
@@ -87,6 +96,8 @@ public class UsuarioServlet extends HttpServlet {
 			dao.conecta();
 			if(banco.equals("salvar")) {
 				retorno.put("DATA", usuarioSalvar(dao, param)); 
+			} else if(banco.equals("status")) {
+				retorno.put("DATA", usuarioStatus(dao, param));
 			}
 			retorno.put("PARAMETROS", param);
 		} catch (Exception e) {
@@ -131,10 +142,34 @@ public class UsuarioServlet extends HttpServlet {
 		return ret;
 	}
 	
+	private Registro usuarioStatus(DAO dao, Registro param) {
+		Registro ret = new Registro();
+		try {
+			ret = new UsuarioDAO(dao).alteraStatusUsuario(param);
+			if(ret.getAsInt("erro") == 0) {
+				dao.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
 	private List<Registro> usuarioListar(DAO dao, Registro param) {
 		 List<Registro> ret = new ArrayList<>();
 		try {
 			ret = new UsuarioDAO(dao).listarUsuario(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	private Registro listarPorId(DAO dao, Registro param) {
+		 Registro ret = new Registro();
+		try {
+			ret.put("USER", new UsuarioDAO(dao).listarUsuario(param).get(0));
+			ret.put("LISTA", new UsuarioDAO(dao).listarTipoPessoa(param));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

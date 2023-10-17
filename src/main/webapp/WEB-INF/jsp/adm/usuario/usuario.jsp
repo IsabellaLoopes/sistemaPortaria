@@ -71,6 +71,49 @@
 			$("#table-responsive").empty();
 			$("#table-responsive").load("${pageContext.request.contextPath}/adm/usuarioListar", param);
 		}
+		
+		function salvarUsuario(id=0){
+			if(validar('#usuarioIncluir')){
+				let param = {
+						id: id,
+						nome: $("#usuarioIncluir #nome").val(),
+						cpf: $("#usuarioIncluir #cpf").val(),
+						tipoPessoa: $("#usuarioIncluir #tipoPessoa").val(),
+						email: $("#usuarioIncluir #email").val(),
+						telParticular: $("#usuarioIncluir #telParticular").val(),
+						telCorporativo: $("#usuarioIncluir #telCorporativo").val(),
+						senha: $("#usuarioIncluir #senha").val(),
+						senhaConfirmar: $("#usuarioIncluir #senhaConfirmar").val()
+				}
+				
+				$.post("${pageContext.request.contextPath}/adm/usuarioSalvar", param, function(retorno){
+					let obj = JSON.parse(retorno);
+					
+					if(obj.DATA.erro == 0){
+						if(id == 0){
+							$("#modal-incluir-usuario").modal("hide");
+						}else {
+							$("#modal-editar-usuario").modal("hide");
+						}
+						
+						Swal.fire({
+							  title: 'Sucesso!',
+							  text: obj.DATA.mensagem,
+							  icon: 'success',
+							  confirmButtonText: 'Ok'
+							})
+						pesquisarUsuario()
+					} else{
+						Swal.fire({
+							  title: 'Ops!',
+							  text: obj.DATA.mensagem,
+							  icon: 'error',
+							  confirmButtonText: 'Ok'
+							})
+					}
+				});
+			}
+		}
 		</script>
 	</tiles:putAttribute>
 </tiles:insertDefinition>

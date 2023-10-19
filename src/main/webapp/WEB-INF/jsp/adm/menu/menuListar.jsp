@@ -29,8 +29,7 @@
 								</div>
 		          			</td>
 		          			<td>
-		          				<a href="javascript: editarUsuario(${l.usr_id})" class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
-		          				<a href="javascript: editarUsuario(${l.usr_id})" class="btn btn-sm"><i class="bi bi-key-fill"></i></a>
+		          				<a href="javascript: atribuirPermissao(${l.men_id}, '${l.men_descricao}')" class="btn btn-sm"><i class="bi bi-key-fill"></i></a>
 		          			</td>
 		          		</tr>
 		          	</c:forEach>
@@ -67,17 +66,16 @@ function ativaInativaMenu(id){
 				  icon: 'error',
 				  confirmButtonText: 'Ok'
 				})
-			pesquisarUsuario()
 		}
 	})
 }
 
-function editarUsuario(id){
-   	let params = {id: id}
+function atribuirPermissao(id, desc){
+   	let params = {idMenu: id, descMenu: desc}
    	
    	$("#modal-responsive").empty().html()
-   	$("#modal-responsive").load("${pageContext.request.contextPath}/adm/usuarioEditar", params, function(){
-   		$("#modal-editar-usuario").modal("show")
+   	$("#modal-responsive").load("${pageContext.request.contextPath}/adm/menuPermissao", params, function(){
+   		$("#modal-permissao-usuario").modal("show")
    	})
 }
 </script>

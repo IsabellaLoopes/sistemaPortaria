@@ -25,7 +25,7 @@ import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
 
 @WebServlet(description = "Usuario", loadOnStartup = 5, urlPatterns = {"/adm/menuCabecalho", "/adm/menuListar", "/adm/menuUsuario",
-						"/adm/menuEditar", "/adm/statusMenu"})
+						"/adm/menuEditar", "/adm/statusMenu", "/adm/menuPermissao", "/adm/menuSalvarPermissoes"})
 public class MenuServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -43,9 +43,15 @@ public class MenuServlet extends HttpServlet {
 		if(req.getRequestURI().indexOf("adm/statusMenu") > 0){
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			processarDados(req, resp, HttpServices.HTTP_POST, "", "status");
-		}else if(req.getRequestURI().indexOf("adm/menuListar") > 0) {
+		} else if(req.getRequestURI().indexOf("adm/menuSalvarPermissoes") > 0){
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			processarDados(req, resp, HttpServices.HTTP_POST, "", "salvarPermissao");
+		} else if(req.getRequestURI().indexOf("adm/menuListar") > 0){
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/adm/menu/menuListar.jsp", "listar");
+		}else if(req.getRequestURI().indexOf("adm/menuPermissao") > 0){
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/adm/menu/menuPermissaoModal.jsp", "userPermisao");
 		}
 	}
 	
@@ -57,8 +63,10 @@ public class MenuServlet extends HttpServlet {
 		
 		try {
 			dao.conecta();
-			if(banco.equals("listar")) {
+			if(banco.equals("listar")){
 				retorno.put("LISTA", menuListar(dao, param));
+			} else if(banco.equals("userPermisao")){
+				retorno.put("DATA", menuPermissoesUsuario(dao, param));
 			}
 			
 			retorno.put("PARAMETROS", param);
@@ -81,6 +89,8 @@ public class MenuServlet extends HttpServlet {
 			dao.conecta();
 			if(banco.equals("status")) {
 				retorno.put("DATA", menuStatus(dao, param));
+			} else if(banco.equals("salvarPermissao")) {
+				retorno.put("DATA", menuAtribuirPermissao(dao, param));
 			}
 			retorno.put("PARAMETROS", param);
 		} catch (Exception e) {
@@ -106,7 +116,7 @@ public class MenuServlet extends HttpServlet {
 	}
 	
 	private List<Registro> menuListar(DAO dao, Registro param) {
-		 List<Registro> ret = new ArrayList<>();
+		List<Registro> ret = new ArrayList<>();
 		try {
 			ret = new MenuDAO(dao).listarMenu(param);
 		} catch (Exception e) {
@@ -115,11 +125,24 @@ public class MenuServlet extends HttpServlet {
 		return ret;
 	}
 	
-	private Registro listarPorId(DAO dao, Registro param) {
-		 Registro ret = new Registro();
+	private Registro menuPermissoesUsuario(DAO dao, Registro param){
+		Registro ret = new Registro();
 		try {
-			ret.put("USER", new MenuDAO(dao).listarMenu(param).get(0));
-			//ret.put("LISTA", new UsuarioDAO(dao).listarTipoPessoa(param));
+			ret.put("USUARIOS", new UsuarioDAO(dao).listarUsuario(param));
+			ret.put("PERMISSOES", new MenuDAO(dao).listarPermissoesMenu(param));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	private Registro menuAtribuirPermissao(DAO dao, Registro param) {
+		Registro ret = new Registro();
+		try {
+			ret = new MenuDAO(dao).atribuirPermissaoMenu(param);
+			if(ret.getAsInt("erro") == 0) {
+				dao.commit();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

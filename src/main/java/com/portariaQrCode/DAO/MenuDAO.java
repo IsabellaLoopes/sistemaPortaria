@@ -20,4 +20,14 @@ public class MenuDAO {
 		return dao.getRowAsRegistro("EXEC cadastro.alteraStatusMenu @id=?, @status=?",
 				new Object[] {param.getAsIntOrZero("id"), param.getAsString("status")});
 	}
+	
+	public List<Registro> listarPermissoesMenu(Registro param) {
+		return dao.listaRowAsRegistro("EXEC cadastro.listarPermissoesMenu @men_id=?",
+				new Object[] {param.getAsIntOrZero("idMenu")});
+	}
+	
+	public Registro atribuirPermissaoMenu(Registro param) {
+		return dao.getRowAsRegistro("EXEC cadastro.atribuirPermissaoMenu @idMenu=?, @idUser=?",
+				new Object[] {param.getAsIntOrZero("idMenu"), param.getAsString("idUser")});
+	}
 }

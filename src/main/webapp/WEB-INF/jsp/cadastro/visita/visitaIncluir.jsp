@@ -16,15 +16,15 @@
 					<div class="row">
 						<div class="col-12 col-sm-12 col-md-5 col-lg-4">
 							<label for="cpf"><b>CPF:</b></label> <input id="cpf"
-								class="form-control" type="text" placeholder="Ex 124.356.987-01"/>
+								class="form-control validar" type="text" placeholder="Ex 124.356.987-01"/>
 						</div>
 						<div class="col-12 col-sm-12 col-md-3 col-lg-3">
-							<label for="data"><b>Data:</b></label> <input id="data"
-								class="form-control" type="datetime-local" value="${dataHora}"/>
+							<label for="dataExpiracao"><b>Data Expiração:</b></label> <input id="dataExpiracao"
+								class="form-control validar" type="datetime-local" value="${dataHora}"/>
 						</div>
 						<div class="col-12 col-sm-12 col-md-5 col-lg-5">
 							<label for="responsavel"><b>Responsável:</b></label> <input id="responsavel"
-								class="form-control" type="text" />
+								class="form-control validar" type="text" />
 						</div>
 						<div class="col-12 col-sm-12 col-md-4 col-lg-4">
 							<label for="observacao"><b>Observações:</b></label> <input id="observacao"

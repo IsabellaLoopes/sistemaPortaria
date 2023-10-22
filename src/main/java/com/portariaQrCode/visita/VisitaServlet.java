@@ -23,7 +23,8 @@ import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
 
 @WebServlet(description = "Visita", loadOnStartup = 5, urlPatterns = {"/cadastro/visitaCabecalho", 
-						"/cadastro/visitaIncluir", "/cadastro/visitaSalvar", "/cadastro/visitaListar"})
+						"/cadastro/visitaIncluir", "/cadastro/visitaSalvar", "/cadastro/visitaListar",
+						"/cadastro/visitaSaidaManual"})
 public class VisitaServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -35,19 +36,22 @@ public class VisitaServlet extends HttpServlet {
 			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/cadastro/visita/visita.jsp", "cabecalho");
 		} else if(req.getRequestURI().indexOf("cadastro/visitaIncluir") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
-			req.setAttribute("dataHora", new SimpleDateFormat("yyyy-MM-dd hh:mm").format(new Date()));			
+			req.setAttribute("dataHora", new SimpleDateFormat("yyyy-MM-dd HH:mm").format(new Date()));			
 			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/cadastro/visita/visitaIncluir.jsp", "incluir");
 		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getRequestURI().indexOf("cadastro/permissaoSalvar") > 0) {
+		if(req.getRequestURI().indexOf("cadastro/visitaSalvar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			processarDados(req, resp, HttpServices.HTTP_POST, "", "salvar");
 		} else if(req.getRequestURI().indexOf("cadastro/visitaListar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/cadastro/visita/visitaListar.jsp", "listar");
+		} else if(req.getRequestURI().indexOf("cadastro/visitaListar") > 0) {
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			processarDados(req, resp, HttpServices.HTTP_POST, "", "saidaManual");
 		}
 	}
 	
@@ -61,8 +65,6 @@ public class VisitaServlet extends HttpServlet {
 			dao.conecta();
 			if(banco.equals("cabecalho")) {
 				retorno.put("DATA", visitaCabecalho(dao, param)); 
-			} else if(banco.equals("incluir")) {
-				retorno.put("DATA", permissaoIncluir(dao, param)); 
 			} else if(banco.equals("listar")) {
 				retorno.put("LISTA", visitaListar(dao, param));
 			} 
@@ -85,8 +87,10 @@ public class VisitaServlet extends HttpServlet {
 		try {
 			dao.conecta();
 			if(banco.equals("salvar")) {
-				retorno.put("DATA", permissaoSalvar(dao, param)); 
-			} 
+				retorno.put("DATA", visitaSalvar(dao, param)); 
+			} else if(banco.equals("saidaManual")) {
+				retorno.put("DATA", visitaSaidaManual(dao, param)); 
+			}
 			retorno.put("PARAMETROS", param);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -107,24 +111,10 @@ public class VisitaServlet extends HttpServlet {
 		return ret;
 	}
 	
-	private Registro permissaoIncluir(DAO dao, Registro param) {
+	private Registro visitaSalvar(DAO dao, Registro param) {
 		Registro ret = new Registro();
 		try {
-			Registro params = new Registro();
-			params.put("status", "S");
-			ret.put("APARELHO", new PermissaoDAO(dao).listarAparelho(params));
-			ret.put("TIPO", new PermissaoDAO(dao).listarTipoPessoa(params));
-			ret.put("PESSOA", new PermissaoDAO(dao).listarPessoa(params));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ret;
-	}
-	
-	private Registro permissaoSalvar(DAO dao, Registro param) {
-		Registro ret = new Registro();
-		try {
-			ret = new PermissaoDAO(dao).salvarPermissao(param);
+			ret = new VisitaDAO(dao).salvarVisita(param);
 			if(ret.getAsInt("erro") == 0) {
 				dao.commit();
 			}
@@ -134,6 +124,19 @@ public class VisitaServlet extends HttpServlet {
 		return ret;
 	}
 	
+	private Registro visitaSaidaManual(DAO dao, Registro param) {
+		Registro ret = new Registro();
+		try {
+			ret = new VisitaDAO(dao).salvarSaidaManual(param);
+			if(ret.getAsInt("erro") == 0) {
+				dao.commit();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+
 	private List<Registro> visitaListar(DAO dao, Registro param) {
 		 List<Registro> ret = new ArrayList<>();
 		try {

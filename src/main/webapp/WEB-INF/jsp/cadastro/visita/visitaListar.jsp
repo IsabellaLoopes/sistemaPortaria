@@ -22,6 +22,7 @@
 		              <th scope="col">Responsável</th>
 		              <th scope="col">Observação</th>
 		              <th scope="col">Vinculado?</th>
+		              <th scope="col">Ações</th>
 		            </tr>
 		          </thead>
 		          <tbody>
@@ -37,6 +38,11 @@
 							<td>${l.responsavel}</td>
 							<td>${l.observacao}</td>
 							<td>${l.viculado}</td>
+							<td>
+								<c:if test="${l.dataSaida == null}">
+									<a href="javascript: saidaManual(${l.id})" class="btn btn-sm"><i class="bi bi-door-open-fill"></i></a>
+								</c:if>
+							</td>
 		          		</tr>
 		          	</c:forEach>
 		          </tbody>
@@ -44,3 +50,31 @@
 	        </c:otherwise>
 		</c:choose>
       </div>
+	<script>
+	function saidaManual(id){
+		let param = {
+				id: id
+		}
+		
+		$.post("${pageContext.request.contextPath}/cadastro/visitaSaidaManual", param, function(retorno){
+			let obj = JSON.parse(retorno);
+			
+			if(obj.DATA.erro == 0){
+				Swal.fire({
+					  title: 'Sucesso!',
+					  text: obj.DATA.mensagem,
+					  icon: 'success',
+					  confirmButtonText: 'Ok'
+					})
+			} else{
+				Swal.fire({
+					  title: 'Ops!',
+					  text: obj.DATA.mensagem,
+					  icon: 'error',
+					  confirmButtonText: 'Ok'
+					})
+			}
+			pesquisarPessoa()
+		})
+	}
+	</script>

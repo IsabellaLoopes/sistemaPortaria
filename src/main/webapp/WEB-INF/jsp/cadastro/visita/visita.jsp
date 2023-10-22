@@ -59,20 +59,21 @@
 		}
 		
 		function salvarVisita(id=0){
-			if(validar('#permissaoIncluir')){
+			if(validar('#visitaIncluir')){
 				let param = {
 						id: id,
-						aparelho: $("#permissaoIncluir #aparelho").val(),
-						tipoPessoa: $("#permissaoIncluir #tipoPessoa").val() || 0,
-						pessoa: $("#permissaoIncluir #pessoa").val() || 0
+						cpf: $("#visitaIncluir #cpf").val(),
+						dataExpiracao: $("#visitaIncluir #dataExpiracao").val().replace("T", " "),
+						responsavel: $("#visitaIncluir #responsavel").val(),
+						observacao: $("#visitaIncluir #observacao").val()
 				}
 				
-				$.post("${pageContext.request.contextPath}/cadastro/permissaoSalvar", param, function(retorno){
+				$.post("${pageContext.request.contextPath}/cadastro/visitaSalvar", param, function(retorno){
 					let obj = JSON.parse(retorno);
 					
 					if(obj.DATA.erro == 0){
 						if(id == 0){
-							$("#modal-incluir-permissao").modal("hide");
+							$("#modal-incluir-visita").modal("hide");
 						}
 						
 						Swal.fire({
@@ -81,7 +82,7 @@
 							  icon: 'success',
 							  confirmButtonText: 'Ok'
 							})
-						pesquisarPermissao()
+						pesquisarVisita()
 					} else{
 						Swal.fire({
 							  title: 'Ops!',

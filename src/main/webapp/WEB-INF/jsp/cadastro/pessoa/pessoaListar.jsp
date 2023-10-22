@@ -14,10 +14,9 @@
 		              <th scope="col">Nome</th>
 		              <th scope="col">E-mail</th>
 		              <th scope="col">CPF</th>
-		              <th scope="col">CNPJ</th>
-		              <th scope="col">Tel. Pessoal</th>
-		              <th scope="col">Tel. Coorporativo</th>
+		              <th scope="col">Telefone</th>
 		              <th scope="col">Tipo</th>
+		              <th scope="col">Usuário</th>
 		              <th scope="col">Status</th>
 		              <th scope="col">Ações</th>
 		            </tr>
@@ -25,21 +24,20 @@
 		          <tbody>
 		          	<c:forEach items="${dados.LISTA}" var="l">
 		          		<tr>
-		          			<td>${l.usr_nome}</td>
-		          			<td>${l.usr_email}</td>
-		          			<td>${l.usr_cpf}</td>
-		          			<td>${l.usr_cnpj}</td>
-		          			<td>${l.usr_telParticular}</td>
-		          			<td>${l.usr_telCorporativo}</td>
+		          			<td>${l.pes_nome}</td>
+		          			<td>${l.pes_email}</td>
+		          			<td>${l.pes_cpf}</td>
+		          			<td>${l.pes_telefone}</td>
 		          			<td>${l.tip_descricao}</td>
+		          			<td><c:if test="${l.usr_id==0}">-</c:if><c:if test="${l.usr_id!=0}">${l.usr_id}</c:if></td>
 		          			<td>							
 								<div class="form-check form-switch">
-									<input class="form-check-input" style="cursor: pointer;" type="checkbox" id="switchAtivo${l.usr_id}" <c:if test="${l.usr_statusDesc eq 'Ativo'}">checked</c:if> onchange="ativaInativaUsuario(${l.usr_id})">
-									<label class="form-check-label" for="switchAtivo${l.usr_id}"></label>
+									<input class="form-check-input" style="cursor: pointer;" type="checkbox" id="switchAtivo${l.pes_id}" <c:if test="${l.pes_statusDesc eq 'Ativo'}">checked</c:if> onchange="ativaInativaPessoa(${l.pes_id})">
+									<label class="form-check-label" for="switchAtivo${l.pes_id}"></label>
 								</div>
 		          			</td>
 		          			<td>
-		          				<a href="javascript: editarUsuario(${l.usr_id})" class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
+		          				<a href="javascript: editarPessoa(${l.pes_id})" class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
 		          			</td>
 		          		</tr>
 		          	</c:forEach>
@@ -53,13 +51,13 @@ $(document).ready(function (){
 	//configurarTabela('tb-especie', false, false, false);
 })
 
-function ativaInativaUsuario(id){
+function ativaInativaPessoa(id){
 	let param = {
 			id: id,
 			status: $("#switchAtivo"+id).attr("checked")=="checked" ? "N" : "S"
 	}
 	
-	$.post("${pageContext.request.contextPath}/adm/statusUsuario", param, function(retorno){
+	$.post("${pageContext.request.contextPath}/cadastro/pessoaStatus", param, function(retorno){
 		let obj = JSON.parse(retorno);
 		
 		if(obj.DATA.erro == 0){
@@ -77,16 +75,16 @@ function ativaInativaUsuario(id){
 				  confirmButtonText: 'Ok'
 				})
 		}
-		pesquisarUsuario()
+		pesquisarPessoa()
 	})
 }
 
-function editarUsuario(id){
+function editarPessoa(id){
    	let params = {id: id}
    	
    	$("#modal-responsive").empty().html()
-   	$("#modal-responsive").load("${pageContext.request.contextPath}/adm/usuarioEditar", params, function(){
-   		$("#modal-editar-usuario").modal("show")
+   	$("#modal-responsive").load("${pageContext.request.contextPath}/cadastro/pessoaEditar", params, function(){
+   		$("#modal-editar-pessoa").modal("show")
    	})
 }
 </script>

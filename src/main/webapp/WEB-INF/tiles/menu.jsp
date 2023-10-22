@@ -96,9 +96,9 @@ a.dropdown {
 				Cadastro </a>
 			<div class="input-progress"></div>
 			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#">Pessoa</a></li>
-				<li><a class="dropdown-item" href="#">Aparelho</a></li>
-				<li><a class="dropdown-item" href="#">Permissão de Acesso</a></li>
+				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/pessoaCabecalho')">Pessoa</a></li>
+				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/aparelhoCabecalho')">Aparelho</a></li>
+				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/permissaoCabecalho')">Permissão de Acesso</a></li>
 				<li><a class="dropdown-item" href="#">Visita</a></li>
 			</ul>
 		</div>
@@ -110,7 +110,7 @@ a.dropdown {
 			<ul class="dropdown-menu">
 				<li><a class="dropdown-item" href="#">Dashboard
 						Entrada/Saída</a></li>
-				<li><a class="dropdown-item" href="#">Relatório de Acesso</a></li>
+				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/historico/relatorioAcessoCabecalho')">Relatório de Acesso</a></li>
 			</ul>
 		</div>
 

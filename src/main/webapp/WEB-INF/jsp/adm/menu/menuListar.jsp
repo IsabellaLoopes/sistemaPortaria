@@ -67,6 +67,7 @@ function ativaInativaMenu(id){
 				  confirmButtonText: 'Ok'
 				})
 		}
+		pesquisarMenu()
 	})
 }
 

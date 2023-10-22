@@ -11,13 +11,10 @@
 				<table class="table" id="tb-especie">
 		          <thead>
 		            <tr>
-		              <th scope="col">Nome</th>
-		              <th scope="col">E-mail</th>
-		              <th scope="col">CPF</th>
-		              <th scope="col">CNPJ</th>
-		              <th scope="col">Tel. Pessoal</th>
-		              <th scope="col">Tel. Coorporativo</th>
-		              <th scope="col">Tipo</th>
+		              <th scope="col">Id</th>
+		              <th scope="col">Descrição</th>
+		              <th scope="col">Tipo Operação</th>
+		              <th scope="col">IP</th>
 		              <th scope="col">Status</th>
 		              <th scope="col">Ações</th>
 		            </tr>
@@ -25,21 +22,18 @@
 		          <tbody>
 		          	<c:forEach items="${dados.LISTA}" var="l">
 		          		<tr>
-		          			<td>${l.usr_nome}</td>
-		          			<td>${l.usr_email}</td>
-		          			<td>${l.usr_cpf}</td>
-		          			<td>${l.usr_cnpj}</td>
-		          			<td>${l.usr_telParticular}</td>
-		          			<td>${l.usr_telCorporativo}</td>
+		          			<td>${l.apa_id}</td>
+		          			<td>${l.apa_descricao}</td>
 		          			<td>${l.tip_descricao}</td>
+		          			<td>${l.apa_ip}</td>
 		          			<td>							
 								<div class="form-check form-switch">
-									<input class="form-check-input" style="cursor: pointer;" type="checkbox" id="switchAtivo${l.usr_id}" <c:if test="${l.usr_statusDesc eq 'Ativo'}">checked</c:if> onchange="ativaInativaUsuario(${l.usr_id})">
-									<label class="form-check-label" for="switchAtivo${l.usr_id}"></label>
+									<input class="form-check-input" style="cursor: pointer;" type="checkbox" id="switchAtivo${l.apa_id}" <c:if test="${l.apa_statusDesc eq 'Ativo'}">checked</c:if> onchange="ativaInativaAparelho(${l.apa_id})">
+									<label class="form-check-label" for="switchAtivo${l.apa_id}"></label>
 								</div>
 		          			</td>
 		          			<td>
-		          				<a href="javascript: editarUsuario(${l.usr_id})" class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
+		          				<a href="javascript: editarAparelho(${l.pes_id})" class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
 		          			</td>
 		          		</tr>
 		          	</c:forEach>
@@ -53,13 +47,13 @@ $(document).ready(function (){
 	//configurarTabela('tb-especie', false, false, false);
 })
 
-function ativaInativaUsuario(id){
+function ativaInativaAparelho(id){
 	let param = {
 			id: id,
 			status: $("#switchAtivo"+id).attr("checked")=="checked" ? "N" : "S"
 	}
 	
-	$.post("${pageContext.request.contextPath}/adm/statusUsuario", param, function(retorno){
+	$.post("${pageContext.request.contextPath}/cadastro/aparelhoStatus", param, function(retorno){
 		let obj = JSON.parse(retorno);
 		
 		if(obj.DATA.erro == 0){
@@ -77,16 +71,16 @@ function ativaInativaUsuario(id){
 				  confirmButtonText: 'Ok'
 				})
 		}
-		pesquisarUsuario()
+		pesquisarAparelho()
 	})
 }
 
-function editarUsuario(id){
+function editarAparelho(id){
    	let params = {id: id}
    	
    	$("#modal-responsive").empty().html()
-   	$("#modal-responsive").load("${pageContext.request.contextPath}/adm/usuarioEditar", params, function(){
-   		$("#modal-editar-usuario").modal("show")
+   	$("#modal-responsive").load("${pageContext.request.contextPath}/cadastro/aparelhoEditar", params, function(){
+   		$("#modal-editar-aparelho").modal("show")
    	})
 }
 </script>

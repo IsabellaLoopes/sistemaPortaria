@@ -7,7 +7,7 @@
 		<div class="modal-content p-3">
 			<div class="modal-header">
 				<h5 class="modal-title nomeTopo">INCLUIR PERMISSÃO</h5>
-				<button type="button" class="close btn" data-dismiss="modal" aria-label="Close" onclick="fecharModal('modal-incluir-usuario')">
+				<button type="button" class="close btn" data-dismiss="modal" aria-label="Close" onclick="fecharModal('modal-incluir-permissao')">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</div>

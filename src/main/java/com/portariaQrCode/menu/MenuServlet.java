@@ -24,8 +24,8 @@ import com.portariaQrCode.types.Registro;
 import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
 
-@WebServlet(description = "Usuario", loadOnStartup = 5, urlPatterns = {"/adm/menuCabecalho", "/adm/menuListar", "/adm/menuUsuario",
-						"/adm/menuEditar", "/adm/statusMenu", "/adm/menuPermissao", "/adm/menuSalvarPermissoes"})
+@WebServlet(description = "Usuario", loadOnStartup = 5, urlPatterns = {"/adm/menuCabecalho", "/adm/menuListar",
+						"/adm/statusMenu", "/adm/menuPermissao", "/adm/menuSalvarPermissoes"})
 public class MenuServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;

@@ -22,15 +22,15 @@
 							<label for="cpf"><b>CPF:</b></label> <input id="cpf"
 								class="form-control validar" type="text" placeholder="Ex 124.356.987-01"/>
 						</div>
-						<div class="col-12 col-sm-12 col-md-6 col-lg-5">
+						<!-- <div class="col-12 col-sm-12 col-md-6 col-lg-5">
 							<label for="tipoPessoa"><b>Tipo Pessoa:</b></label> <select
 								id="tipoPessoa" class="form-select validar">
 								<c:forEach items="${dados.DATA.LISTA}" var="t">
 									<option value="${t.tip_sigla}">${t.tip_descricao}</option>
 								</c:forEach>
 							</select>
-						</div>
-						<div class="col-12 col-sm-12 col-md-6 col-lg-7">
+						</div> -->
+						<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 							<label for="email"><b>Email:</b></label> <input id="email"
 								class="form-control validar" type="text" />
 						</div>

@@ -20,7 +20,7 @@
 						<label for="cpf"><b>CPF:</b></label> <input id="cpf"
 							class="form-control" type="text" />
 					</div>
-					<div class="col-12 col-sm-12 col-md-2 col-lg-2">
+					<!-- <div class="col-12 col-sm-12 col-md-2 col-lg-2">
 						<label for="tipoPessoa"><b>Tipo Pessoa:</b></label> <select
 							id="tipoPessoa" class="form-select">
 							<option value="">Todos</option>
@@ -28,7 +28,7 @@
 								<option value="${t.tip_sigla}">${t.tip_descricao}</option>
 							</c:forEach>
 						</select>
-					</div>
+					</div>  -->
 					<div class="col-12 col-sm-12 col-md-2 col-lg-2">
 						<label for="status"><b>Status:</b></label> <select id="status"
 							class="form-select">
@@ -64,7 +64,8 @@
 		function pesquisarUsuario(){
 			let param = {
 					nome: $("#usuario #nome").val(),
-					tipo: $("#usuario #tipoPessoa").val(),
+					//tipo: $("#usuario #tipoPessoa").val(),
+					tipo: 'U',
 					cpf: $("#usuario #cpf").val(),
 					status: $("#usuario #status").val(),
 			}
@@ -78,7 +79,8 @@
 						id: id,
 						nome: $("#usuarioIncluir #nome").val(),
 						cpf: $("#usuarioIncluir #cpf").val(),
-						tipoPessoa: $("#usuarioIncluir #tipoPessoa").val(),
+						//tipoPessoa: $("#usuarioIncluir #tipoPessoa").val(),
+						tipoPessoa: 'U',
 						email: $("#usuarioIncluir #email").val(),
 						telParticular: $("#usuarioIncluir #telParticular").val(),
 						telCorporativo: $("#usuarioIncluir #telCorporativo").val(),

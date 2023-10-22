@@ -246,3 +246,8 @@ td{
 	font-family: 'PublicSans';
 	font-size: 80%;
 }
+
+.label-dashboard{
+	font-family: 'PublicSans_Bold';
+	font-size: 100%;
+}

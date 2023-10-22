@@ -32,6 +32,7 @@
 		<tiles:insertAttribute name="body" />
 
 		<div class="mt-3" id="table-responsive"></div>
+		<div class="mt-3" id="table-responsive1"></div>
 		<div id="modal-responsive"></div>
 	</section>
 

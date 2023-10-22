@@ -99,7 +99,7 @@ a.dropdown {
 				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/pessoaCabecalho')">Pessoa</a></li>
 				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/aparelhoCabecalho')">Aparelho</a></li>
 				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/permissaoCabecalho')">Permissão de Acesso</a></li>
-				<li><a class="dropdown-item" href="#">Visita</a></li>
+				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/visitaCabecalho')">Visita</a></li>
 			</ul>
 		</div>
 
@@ -108,21 +108,22 @@ a.dropdown {
 				Histórico </a>
 			<div class="input-progress"></div>
 			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#">Dashboard
+				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/dashboard/dashboardCabecalho')">Dashboard
 						Entrada/Saída</a></li>
 				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/historico/relatorioAcessoCabecalho')">Relatório de Acesso</a></li>
 			</ul>
 		</div>
 
 		<div class="dropdown mt-3">
-			<a class="dropdown" type="button" data-bs-toggle="dropdown" href="#">
+			<!-- <a class="dropdown" type="button" data-bs-toggle="dropdown" href="#">  -->
+			<a class="dropdown" type="button" href="#" onclick="javaScript: abrirPagina('/historico/relatorioAcessoCabecalho')">
 				Suporte </a>
 			<div class="input-progress"></div>
-			<ul class="dropdown-menu">
+			<!-- <ul class="dropdown-menu">
 				<li><a class="dropdown-item" href="#">Action</a></li>
 				<li><a class="dropdown-item" href="#">Another action</a></li>
 				<li><a class="dropdown-item" href="#">Something else here</a></li>
-			</ul>
+			</ul> -->
 		</div>
 
 		<a class="dropdown" type="button" href="#"

@@ -22,10 +22,10 @@ public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (req.getRequestURI().indexOf("login/entrar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/login/primeiroPassos.jsp");
+			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/login/primeiroPassos.jsp");
 		}
 	}
 

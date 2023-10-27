@@ -251,3 +251,10 @@ td{
 	font-family: 'PublicSans_Bold';
 	font-size: 100%;
 }
+
+#div-login #p-loginErro {
+	font-family: 'PublicSans';
+	font-size: 70%;
+	margin-top: 5%;
+	color: red
+}

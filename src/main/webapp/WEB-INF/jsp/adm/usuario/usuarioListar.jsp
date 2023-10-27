@@ -12,6 +12,7 @@
 		          <thead>
 		            <tr>
 		              <th scope="col">Nome</th>
+		              <th scope="col">Apelido</th>
 		              <th scope="col">E-mail</th>
 		              <th scope="col">CPF</th>
 		              <th scope="col">CNPJ</th>
@@ -26,6 +27,7 @@
 		          	<c:forEach items="${dados.LISTA}" var="l">
 		          		<tr>
 		          			<td>${l.usr_nome}</td>
+		          			<td>${l.usr_apelido}</td>
 		          			<td>${l.usr_email}</td>
 		          			<td>${l.usr_cpf}</td>
 		          			<td>${l.usr_cnpj}</td>

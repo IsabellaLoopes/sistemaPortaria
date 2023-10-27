@@ -43,7 +43,7 @@
 								id="usr" class="form-select">
 								<option value="0">Selecione...</option>
 								<c:forEach items="${dados.DATA.USUARIOS}" var="t">
-									<option value="${t.usr_id}">${t.usr_apelido} - ${t.usr_nome}</option>
+									<option value="${t.usr_id}" <c:if test="${dados.DATA.PESSOA.pes_usr_id == t.usr_id}">SELECTED</c:if>>${t.usr_apelido} - ${t.usr_nome}</option>
 								</c:forEach>
 							</select>
 						</div>

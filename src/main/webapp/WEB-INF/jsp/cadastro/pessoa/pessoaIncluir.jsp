@@ -38,14 +38,14 @@
 							<label for="tel"><b>Telefone:</b></label> <input id="tel"
 								class="form-control" type="text" />
 						</div>
-						<div class="col-12 col-sm-12 col-md-6 col-lg-5 d-none" id="divUsuario">
+						<!-- <div class="col-12 col-sm-12 col-md-6 col-lg-5 d-none" id="divUsuario">
 							<label for="usr"><b>Usuário:</b></label> <select
 								id="usr" class="form-select validar">
 								<c:forEach items="${dados.DATA.USUARIOS}" var="t">
 									<option value="${t.usr_id}">${t.usr_apelido} - ${t.usr_nome}</option>
 								</c:forEach>
 							</select>
-						</div>
+						</div> -->
 					</div>
 				</form>
 			</div>

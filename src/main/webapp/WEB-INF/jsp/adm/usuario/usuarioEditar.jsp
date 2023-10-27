@@ -16,7 +16,7 @@
 					<div class="row">
 						<div class="col-12 col-sm-12 col-md-6 col-lg-8">
 							<label for="nome"><b>Nome:</b></label> <input id="nome"
-								class="form-control validar" type="text" value="${dados.DATA.USER.usr_nome}"/>
+								class="form-control validar" type="text" value="${dados.DATA.USER.usr_nome}" DISABLED/>
 						</div>
 						<div class="col-12 col-sm-12 col-md-6 col-lg-4">
 							<label for="cpf"><b>CPF:</b></label> <input id="cpf"
@@ -32,15 +32,19 @@
 						</div> -->
 						<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 							<label for="email"><b>Email:</b></label> <input id="email"
-								class="form-control validar" type="text" value="${dados.DATA.USER.usr_email}"/>
+								class="form-control validar" type="text" value="${dados.DATA.USER.usr_email}" DISABLED/>
 						</div>
 						<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 							<label for="telParticular"><b>Telefone Particular:</b></label> <input id="telParticular"
-								class="form-control" type="text" value="${dados.DATA.USER.usr_telParticular}"/>
+								class="form-control" type="text" value="${dados.DATA.USER.usr_telParticular}" DISABLED/>
 						</div>
 						<div class="col-12 col-sm-12 col-md-6 col-lg-6">
 							<label for="telCorporativo"><b>Telefone Corporativo:</b></label> <input id="telCorporativo"
 								class="form-control" type="text" value="${dados.DATA.USER.usr_telCorporativa}"/>
+						</div>
+						<div class="col-12 col-sm-12 col-md-6 col-lg-6">
+							<label for="apelido"><b>Apelido:</b></label> <input id="apelido"
+								class="form-control validar" type="text" value="${dados.DATA.USER.usr_apelido}"/>
 						</div>
 					</div>
 				</form>
@@ -54,6 +58,8 @@
 <script>
 $(document).ready(function(){
 	$("#usuarioIncluir #cpf").mask("999.999.999-99");
+	$("#usuarioIncluir #telParticular").mask("(99) 99999-9999");
+	$("#usuarioIncluir #telCorporativo").mask("(99) 99999-9999");
 });
 </script>
 </body>

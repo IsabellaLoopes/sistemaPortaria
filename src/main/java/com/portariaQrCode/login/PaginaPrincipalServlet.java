@@ -2,7 +2,9 @@ package com.portariaQrCode.login;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,6 +15,9 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
 
+import com.portariaQrCode.DAO.DAO;
+import com.portariaQrCode.DAO.UsuarioDAO;
+import com.portariaQrCode.types.Registro;
 import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
 
@@ -22,33 +27,43 @@ public class PaginaPrincipalServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (req.getRequestURI().indexOf("home") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/home/home.jsp");
+			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/home/home.jsp");
 		}
 	}
 
 	private void buscarDados(HttpServletRequest req, HttpServletResponse resp, String method, String json,
 			String URL) throws ServletException, IOException {
-
+		DAO dao = new DAO();
 		JSONObject retorno = new JSONObject();
 
-		// String ret = AQUI VAI O BANCO DE DADOS 
+		try {
+			dao.conecta();
+			Registro param = HttpServices.requestToRegistro(req);
+			retorno.put("PARAMETROS", param);
+			retorno.put("MENU", menuUsuario(dao, param));
+			
+			req.setAttribute("dados", HttpServices.parseJSONListStringToHashMap(retorno.toString()));
 
-		//JSONObject aux = new JSONObject(ret);
-		//String dataRet = aux.getString("DATA");
-		retorno.put("PARAMETROS", HttpServices.requestToRegistro(req));
-		//retorno.put(Constantes.CODDER, aux.get(Constantes.CODDER));
-		//retorno.put(Constantes.MSG, aux.get(Constantes.MSG));
-		//retorno.put("DATA", new JSONObject(dataRet != null && !dataRet.isEmpty() ? dataRet.trim() : "{}"));
-
-		//req.setAttribute("usuario", HttpServices.parseJSONListStringToHashMap(usuario));
-		req.setAttribute("dados", HttpServices.parseJSONListStringToHashMap(retorno.toString()));
-
-		RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(URL);
-	    dispatcher.forward(req, resp);
-		//HttpUtil.dispacher(req, resp, URL);
+			RequestDispatcher dispatcher = getServletContext().getRequestDispatcher(URL);
+		    dispatcher.forward(req, resp);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			dao.desconecta();
+		}
+	}
+	
+	private List<Registro> menuUsuario(DAO dao, Registro param) {
+		List<Registro> ret = new ArrayList<>();
+		try {
+			ret = new UsuarioDAO(dao).menuUsuario(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
 	}
 
 }

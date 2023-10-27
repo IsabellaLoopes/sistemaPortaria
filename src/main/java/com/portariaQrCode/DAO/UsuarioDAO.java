@@ -3,6 +3,7 @@ package com.portariaQrCode.DAO;
 import java.util.List;
 
 import com.portariaQrCode.types.Registro;
+import com.portariaQrCode.util.Criptografia;
 
 public class UsuarioDAO {
 	private DAO dao;
@@ -17,11 +18,11 @@ public class UsuarioDAO {
 	}
 
 	public Registro salvarUsuario(Registro param) {
-		return dao.getRowAsRegistro("EXEC cadastro.salvarUsuario @id=?, @nome=?, @tipo=?, @email=?, @telParticular=?, @telCorporativo=?, @senha=?, @status=?, @cpf=?, @cnpj=?, @documento=?, @foto=?",
+		return dao.getRowAsRegistro("EXEC cadastro.salvarUsuario @id=?, @nome=?, @tipo=?, @email=?, @telParticular=?, @telCorporativo=?, @senha=?, @status=?, @cpf=?, @cnpj=?, @apelido=?",
 				new Object[] {param.getAsIntOrZero("id"), param.getAsString("nome"), param.getAsString("tipoPessoa"), 
 						param.getAsString("email"), param.getAsString("telParticular"), param.getAsString("telCorporativo"), 
-						param.getAsStringOrValue("senha", "senha"), param.getAsStringOrValue("status", "S"), param.getAsString("cpf"),
-						param.getAsString("cnpj"), param.getAsString("documento"), param.getAsString("foto")});
+						param.getAsIntOrZero("id") <= 0 ? Criptografia.encripta(param.getAsString("senha")) : "", param.getAsStringOrValue("status", "S"), param.getAsString("cpf"),
+						param.getAsStringOrValue("cnpj", ""), param.getAsString("apelido")});
 	}
 	
 	public List<Registro> listarUsuario(Registro param) {
@@ -34,5 +35,21 @@ public class UsuarioDAO {
 	public Registro alteraStatusUsuario(Registro param) {
 		return dao.getRowAsRegistro("EXEC cadastro.alteraStatusUsuario @id=?, @status=?",
 				new Object[] {param.getAsIntOrZero("id"), param.getAsString("status")});
+	}
+	
+	public Registro verificarLoginWeb(Registro param) {
+		return dao.getRowAsRegistro("EXEC sistema.verificarLoginWeb @login=?, @senha=?",
+				new Object[] {param.getAsString("login"), Criptografia.encripta(param.getAsString("senha"))});
+	}
+	
+	public List<Registro> menuUsuario(Registro param) {
+		return dao.listaRowAsRegistro("EXEC sistema.listarMenuUsuario @nivel=?, @status=?, @usuario=?", 
+				new Object[] {param.getAsIntOrValue("nivel", -1), param.getAsStringOrValue("status", "S"),
+						param.getAsIntOrValue("usuario", 11)});
+	}
+	
+	public Registro verificarPessoa(Registro param) {
+		return dao.getRowAsRegistro("EXEC cadastro.verificarPessoa @cpf=?",
+				new Object[] {param.getAsStringOrValue("cpf", "")});
 	}
 }

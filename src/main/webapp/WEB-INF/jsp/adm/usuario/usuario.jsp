@@ -84,8 +84,9 @@
 						email: $("#usuarioIncluir #email").val(),
 						telParticular: $("#usuarioIncluir #telParticular").val(),
 						telCorporativo: $("#usuarioIncluir #telCorporativo").val(),
-						senha: $("#usuarioIncluir #senha").val(),
-						senhaConfirmar: $("#usuarioIncluir #senhaConfirmar").val()
+						apelido: $("#usuarioIncluir #apelido").val(),
+						//senha: $("#usuarioIncluir #senha").val(),
+						//senhaConfirmar: $("#usuarioIncluir #senhaConfirmar").val()
 				}
 				
 				$.post("${pageContext.request.contextPath}/adm/usuarioSalvar", param, function(retorno){

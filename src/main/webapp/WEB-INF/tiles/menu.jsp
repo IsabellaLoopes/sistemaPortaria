@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <style>
 .offcanvas .dropdown {
 	text-decoration: none !important;
@@ -78,6 +80,24 @@ a.dropdown {
 		</div>
 		<input class="form-control" type="search" aria-label="Pesquisar">
 
+		<c:forEach items="${dados.MENU}" var="m">
+			<c:if test="${m.men_menu == 0 && m.men_id != 5}">
+				<div class="dropdown mt-3">
+					<a class="dropdown" type="button" data-bs-toggle="dropdown" href="#">
+						${m.men_descricao} </a>
+					<div class="input-progress"></div>
+					<ul class="dropdown-menu">
+						<c:forEach items="${dados.MENU}" var="s">
+							<c:if test="${s.men_menu == m.men_id}">
+								<li><a class="dropdown-item" href="#"
+								onclick="javaScript: abrirPagina('${s.men_url}')">${s.men_descricao}</a></li>
+							</c:if>
+						</c:forEach>
+					</ul>
+				</div>
+			</c:if>
+		</c:forEach>
+		<!-- 
 		<div class="dropdown mt-3">
 			<a class="dropdown" type="button" data-bs-toggle="dropdown" href="#">
 				Administração </a>
@@ -112,10 +132,10 @@ a.dropdown {
 						Entrada/Saída</a></li>
 				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/historico/relatorioAcessoCabecalho')">Relatório de Acesso</a></li>
 			</ul>
-		</div>
+		</div> 
 
 		<div class="dropdown mt-3">
-			<!-- <a class="dropdown" type="button" data-bs-toggle="dropdown" href="#">  -->
+			<!-- <a class="dropdown" type="button" data-bs-toggle="dropdown" href="#"> 
 			<a class="dropdown" type="button" href="#" onclick="javaScript: abrirPagina('/historico/relatorioAcessoCabecalho')">
 				Suporte </a>
 			<div class="input-progress"></div>
@@ -123,11 +143,15 @@ a.dropdown {
 				<li><a class="dropdown-item" href="#">Action</a></li>
 				<li><a class="dropdown-item" href="#">Another action</a></li>
 				<li><a class="dropdown-item" href="#">Something else here</a></li>
-			</ul> -->
-		</div>
+			</ul> 
+		</div>-->
 
-		<a class="dropdown" type="button" href="#"
-			style="margin-top: 20%; margin-right: 10%">Perfil</a>
+		<!--<c:forEach items="${dados.MENU}" var="m">
+			<c:if test="${m.men_id == 5}">-->
+				<a class="dropdown" type="button" href="#"
+				style="margin-top: 20%; margin-right: 10%">Perfil</a>
+			<!--</c:if>
+		</c:forEach>-->
 	</div>
 </div>
 
@@ -144,6 +168,15 @@ a.dropdown {
 				src="${pageContext.request.contextPath}/img/logo-letra-branca-transparente.png" />
 
 			<div class="row" style="margin: 0 !important;">
+				<c:forEach items="${dados.MENU}" var="m">
+					<c:if test="${m.men_menu == 0 && m.men_id != 5 && m.men_icone != ''}">
+						<div class="col-12 mt-3 iMenu">
+							<i class="${m.men_icone}"></i>
+						</div>
+					</c:if>
+				</c:forEach>
+				
+				<!-- 
 				<div class="col-12 mt-3 iMenu">
 					<i class="fa fa-wrench"></i>
 				</div>
@@ -153,6 +186,7 @@ a.dropdown {
 				<div class="col-12 mt-3 iMenu">
 					<i class="fa fa-history"></i>
 				</div>
+				 -->
 
 				<div class="col-12" style="margin-top: 90%">
 					<i class="fa fa-user"></i>

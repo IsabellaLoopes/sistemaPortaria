@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import com.portariaQrCode.DAO.DAO;
 import com.portariaQrCode.DAO.RelatorioAcessoDAO;
+import com.portariaQrCode.DAO.UsuarioDAO;
 import com.portariaQrCode.types.Registro;
 import com.portariaQrCode.util.HttpServices;
 
@@ -52,6 +53,7 @@ public class RelatorioAcessoServlet extends HttpServlet {
 			dao.conecta();
 			if(banco.equals("cabecalho")) {
 				retorno.put("DATA", relatorioAcessoCabecalho(dao, param)); 
+				retorno.put("MENU", menuUsuario(dao, param));
 			} else if(banco.equals("listar")) {
 				retorno.put("LISTA", logListar(dao, param));
 			} 
@@ -83,6 +85,16 @@ public class RelatorioAcessoServlet extends HttpServlet {
 		 List<Registro> ret = new ArrayList<>();
 		try {
 			ret = new RelatorioAcessoDAO(dao).listarAcesso(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	private List<Registro> menuUsuario(DAO dao, Registro param) {
+		List<Registro> ret = new ArrayList<>();
+		try {
+			ret = new UsuarioDAO(dao).menuUsuario(param);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -69,6 +69,7 @@ public class PessoaServlet extends HttpServlet {
 			dao.conecta();
 			if(banco.equals("cabecalho")) {
 				retorno.put("DATA", usuarioCabecalho(dao, param)); 
+				retorno.put("MENU", menuUsuario(dao, param));
 			} else if(banco.equals("incluir")) {
 				retorno.put("DATA", pessoaIncluir(dao, param)); 
 			} else if(banco.equals("listar")) {
@@ -177,5 +178,14 @@ public class PessoaServlet extends HttpServlet {
 		}
 		return ret;
 	}
-
+	
+	private List<Registro> menuUsuario(DAO dao, Registro param) {
+		List<Registro> ret = new ArrayList<>();
+		try {
+			ret = new UsuarioDAO(dao).menuUsuario(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
 }

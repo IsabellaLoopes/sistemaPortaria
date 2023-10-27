@@ -20,7 +20,7 @@
 								<p id="p-login">Seja bem-vindo(a) ao ACESSO SEGURO.<br>Mantenha o controle 
 													do fluxo de pessoas em seu ambiente empresarial em tempo 
 														real.</p>
-								<button type="button" class="btn btn-primary btn-primeirosPassos color-primary" onclick="paginaPrincipal()">Continuar <i class="fa fa-arrow-right"></i></button>
+								<button type="button" class="btn btn-primary btn-primeirosPassos color-primary" onclick="fecharModal('modal-primeiros-passos')">Continuar <i class="fa fa-arrow-right"></i></button>
 							</div>
 							<img style="width:40%; float: right; margin:10%; opacity:0.5" src="${pageContext.request.contextPath}/img/logo-letra-branca-transparente.png"/>
 						
@@ -34,11 +34,16 @@
 	<tiles:putAttribute name="footer">
 		<script>
 			$(document).ready(function () {
-		    	$("#modal-primeiros-passos").modal("show");
+				if(${dados.PARAMETROS.primeiroAcesso == 'S'}){
+					$("#modal-primeiros-passos").modal("show");
+			    	
+			    	$('#modal-primeiros-passos').on('hidden.bs.modal', function (e) {
+			    		paginaPrincipal({usuario: ${dados.PARAMETROS.usr_id}})
+			    	});
+				} else{
+					paginaPrincipal({usuario: ${dados.PARAMETROS.usr_id}})
+				}
 		    	
-		    	$('#modal-primeiros-passos').on('hidden.bs.modal', function (e) {
-		    		 window.location.href = CONTEXT + "/home";
-		    	});
 			})
 		</script>
 	</tiles:putAttribute>

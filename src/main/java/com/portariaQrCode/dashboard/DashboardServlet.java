@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import com.portariaQrCode.DAO.DAO;
 import com.portariaQrCode.DAO.DashboardDAO;
+import com.portariaQrCode.DAO.UsuarioDAO;
 import com.portariaQrCode.types.Registro;
 import com.portariaQrCode.util.HttpServices;
 
@@ -56,7 +57,9 @@ public class DashboardServlet extends HttpServlet {
 			if(banco.equals("listar")) {
 				param.put("data", new SimpleDateFormat("yyyy-MM-dd").format(new Date()));
 				retorno.put("LISTA", dashboardListar(dao, param));
-			} 
+			} else if(banco.equals("cabecalho")) {
+				retorno.put("MENU", menuUsuario(dao, param));
+			}
 			
 			retorno.put("PARAMETROS", param);
 			req.setAttribute("dados", HttpServices.parseJSONListStringToHashMap(retorno.toString()));
@@ -73,6 +76,16 @@ public class DashboardServlet extends HttpServlet {
 		List<Registro> ret = new ArrayList<>();
 		try {
 			ret = new DashboardDAO(dao).listarDash(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	private List<Registro> menuUsuario(DAO dao, Registro param) {
+		List<Registro> ret = new ArrayList<>();
+		try {
+			ret = new UsuarioDAO(dao).menuUsuario(param);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

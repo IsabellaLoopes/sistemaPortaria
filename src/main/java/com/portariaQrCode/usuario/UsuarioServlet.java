@@ -3,6 +3,7 @@ package com.portariaQrCode.usuario;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ import com.portariaQrCode.util.HttpUtil;
 
 @WebServlet(description = "Usuario", loadOnStartup = 5, urlPatterns = {"/adm/usuarioCabecalho", 
 						"/adm/usuarioIncluir", "/adm/usuarioSalvar", "/adm/usuarioListar", "/adm/statusUsuario",
-						"/adm/usuarioEditar"})
+						"/adm/usuarioEditar", "/adm/login", "/adm/verificarPessoa"})
 public class UsuarioServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -55,7 +56,15 @@ public class UsuarioServlet extends HttpServlet {
 		}else if(req.getRequestURI().indexOf("adm/usuarioEditar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/adm/usuario/usuarioEditar.jsp", "listarPorId");
+		} else if(req.getRequestURI().indexOf("adm/login") > 0) {
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			processarDados(req, resp, HttpServices.HTTP_POST, "", "login");
+		} else if(req.getRequestURI().indexOf("adm/verificarPessoa") > 0) {
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			processarDados(req, resp, HttpServices.HTTP_POST, "", "verificarPessoa");
 		}
+			
+			
 	}
 	
 	private void buscarDados(HttpServletRequest req, HttpServletResponse resp, String method, String json,
@@ -68,6 +77,7 @@ public class UsuarioServlet extends HttpServlet {
 			dao.conecta();
 			if(banco.equals("cabecalho")) {
 				retorno.put("DATA", usuarioCabecalho(dao, param)); 
+				retorno.put("MENU", menuUsuario(dao, param));
 			} else if(banco.equals("incluir")) {
 				retorno.put("DATA", usuarioIncluir(dao, param)); 
 			} else if(banco.equals("listar")) {
@@ -94,12 +104,20 @@ public class UsuarioServlet extends HttpServlet {
 		Registro param = HttpServices.requestToRegistro(req);	
 		try {
 			dao.conecta();
+			
 			if(banco.equals("salvar")) {
 				retorno.put("DATA", usuarioSalvar(dao, param)); 
 			} else if(banco.equals("status")) {
 				retorno.put("DATA", usuarioStatus(dao, param));
+			} else if(banco.equals("login")) {
+				retorno.put("DATA", verificarLoginWeb(dao, param));
+			}else if(banco.equals("verificarPessoa")) {
+				retorno.put("DATA", verificarPessoa(dao, param));
 			}
-			retorno.put("PARAMETROS", param);
+			
+			if(!banco.equals("login")){
+				retorno.put("PARAMETROS", param);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -132,6 +150,11 @@ public class UsuarioServlet extends HttpServlet {
 	private Registro usuarioSalvar(DAO dao, Registro param) {
 		Registro ret = new Registro();
 		try {
+			Calendar cal = Calendar.getInstance();
+			if(param.getAsIntOrZero("id") <= 0) {
+				param.put("senha", "!" + cal.get(Calendar.YEAR) + "Ac3ss0" + cal.get(Calendar.DAY_OF_MONTH
+						) + "@" + (cal.get(Calendar.MONTH)+1));
+			}
 			ret = new UsuarioDAO(dao).salvarUsuario(param);
 			if(ret.getAsInt("erro") == 0) {
 				dao.commit();
@@ -175,5 +198,36 @@ public class UsuarioServlet extends HttpServlet {
 		}
 		return ret;
 	}
+	
+	private Registro verificarLoginWeb(DAO dao, Registro param) {
+		Registro ret = new Registro();
+		try {
+			ret = new UsuarioDAO(dao).verificarLoginWeb(param);
+			dao.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
 
+	private Registro verificarPessoa(DAO dao, Registro param) {
+		Registro ret = new Registro();
+		try {
+			ret = new UsuarioDAO(dao).verificarPessoa(param);
+			dao.commit();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	private List<Registro> menuUsuario(DAO dao, Registro param) {
+		List<Registro> ret = new ArrayList<>();
+		try {
+			ret = new UsuarioDAO(dao).menuUsuario(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
 }

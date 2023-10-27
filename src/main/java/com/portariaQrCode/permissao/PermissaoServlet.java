@@ -17,6 +17,7 @@ import org.json.JSONObject;
 
 import com.portariaQrCode.DAO.DAO;
 import com.portariaQrCode.DAO.PermissaoDAO;
+import com.portariaQrCode.DAO.UsuarioDAO;
 import com.portariaQrCode.types.Registro;
 import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
@@ -59,6 +60,7 @@ public class PermissaoServlet extends HttpServlet {
 			dao.conecta();
 			if(banco.equals("cabecalho")) {
 				retorno.put("DATA", permissaoCabecalho(dao, param)); 
+				retorno.put("MENU", menuUsuario(dao, param));
 			} else if(banco.equals("incluir")) {
 				retorno.put("DATA", permissaoIncluir(dao, param)); 
 			} else if(banco.equals("listar")) {
@@ -138,6 +140,16 @@ public class PermissaoServlet extends HttpServlet {
 		 List<Registro> ret = new ArrayList<>();
 		try {
 			ret = new PermissaoDAO(dao).listarPermissao(param);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	private List<Registro> menuUsuario(DAO dao, Registro param) {
+		List<Registro> ret = new ArrayList<>();
+		try {
+			ret = new UsuarioDAO(dao).menuUsuario(param);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

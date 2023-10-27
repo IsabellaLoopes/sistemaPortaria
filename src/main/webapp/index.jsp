@@ -14,18 +14,20 @@
 	
 				<form id="form-login" class="centered">
 					<div class="input-group">
-						<input class="input-field" type="text" required> 
+						<input class="input-field validar" type="text" id="login"> 
 						<label class="input-label">Usuário</label>
 						<div class="icone-form"><i class="fas fa-user icone-i"></i></div>
 						<div class="input-progress"></div>
 					</div>
 					<div class="input-group">
-						<input class="input-field" type="password" required> 
+						<input class="input-field validar" type="password" id="senha"> 
 						<label class="input-label">Senha</label>
 						<div class="icone-form"><i class="fas fa-key icone-i"></i></div>
 						<div class="input-progress"></div>
 					</div>
 				</form>
+				
+				<p class="d-none" id="p-loginErro"></p>
 				<button type="button" class="btn btn-primary btn-formulario" onclick="login()">ENTRAR</button>
 			</div>
 		</div>
@@ -33,8 +35,28 @@
 
 	<tiles:putAttribute name="footer">
 		<script>
-			function login(){				
-				window.location.href = CONTEXT + "/login/entrar";
+			function login(){
+				if($("#form-login #login").val() != '' && $("#form-login #senha").val() != ''){
+					let param = {
+							login: $("#form-login #login").val(),
+							senha: $("#form-login #senha").val()
+					}
+					
+					$.post("${pageContext.request.contextPath}/adm/login", param, function(retorno){
+						$("#p-loginErro").addClass("d-none");
+						let obj = JSON.parse(retorno);
+						
+						if(obj.DATA.erro == 0){
+							abrirPagina("/login/entrar", true, obj.DATA, false)
+						}else {
+							$("#p-loginErro").text(obj.DATA.mensagem);
+							$("#p-loginErro").removeClass("d-none");
+						}
+					});
+				} else {
+					$("#p-loginErro").text("Preencha os campos obrigatórios: Login e Senha");
+					$("#p-loginErro").removeClass("d-none");
+				}
 			}
 		</script>
 	</tiles:putAttribute>

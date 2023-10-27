@@ -1,8 +1,9 @@
 <script>
 
-function paginaPrincipal(){	
+function paginaPrincipal(param){	
 	$("#modal-primeiros-passos").modal("hide");
-	 window.location.href = CONTEXT + "/home"
+	 //window.location.href = CONTEXT + "/home"
+	abrirPagina("/home", true, param, false)
 }
 
 function abrirPagina(url, params = {}){				

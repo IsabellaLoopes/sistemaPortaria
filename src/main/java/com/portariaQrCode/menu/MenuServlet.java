@@ -34,7 +34,7 @@ public class MenuServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		if (req.getRequestURI().indexOf("adm/menuCabecalho") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/adm/menu/menu.jsp", "");
+			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/adm/menu/menu.jsp", "cabecalho");
 		}
 	}
 	
@@ -67,6 +67,8 @@ public class MenuServlet extends HttpServlet {
 				retorno.put("LISTA", menuListar(dao, param));
 			} else if(banco.equals("userPermisao")){
 				retorno.put("DATA", menuPermissoesUsuario(dao, param));
+			} else if(banco.equals("cabecalho")) {
+				retorno.put("MENU", menuUsuario(dao, param));
 			}
 			
 			retorno.put("PARAMETROS", param);
@@ -143,6 +145,16 @@ public class MenuServlet extends HttpServlet {
 			if(ret.getAsInt("erro") == 0) {
 				dao.commit();
 			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return ret;
+	}
+	
+	private List<Registro> menuUsuario(DAO dao, Registro param) {
+		List<Registro> ret = new ArrayList<>();
+		try {
+			ret = new UsuarioDAO(dao).menuUsuario(param);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

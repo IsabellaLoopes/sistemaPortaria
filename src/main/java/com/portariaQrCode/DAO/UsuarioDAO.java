@@ -52,4 +52,17 @@ public class UsuarioDAO {
 		return dao.getRowAsRegistro("EXEC cadastro.verificarPessoa @cpf=?",
 				new Object[] {param.getAsStringOrValue("cpf", "")});
 	}
+	
+	public Registro verificarUsuarioSenha(Registro param) {
+		return dao.getRowAsRegistro("EXEC sistema.verificarUsuarioSenha @usuario=?, @email=?, @cpf=?",
+				new Object[] {param.getAsStringOrValue("usuario", ""), param.getAsStringOrValue("email", ""),
+								param.getAsStringOrValue("cpf", "")});
+	}
+	
+	public Registro salvarNovaSenha(Registro param) {
+		return dao.getRowAsRegistro("EXEC sistema.salvarNovaSenha @senha=?, @id=?",
+				new Object[] {Criptografia.encripta(param.getAsStringOrValue("senha", "")), param.getAsIntOrZero("id")});
+	}
+	
+	
 }

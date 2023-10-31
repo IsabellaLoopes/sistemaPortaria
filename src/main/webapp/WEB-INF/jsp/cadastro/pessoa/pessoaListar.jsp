@@ -38,6 +38,8 @@
 		          			</td>
 		          			<td>
 		          				<a href="javascript: editarPessoa(${l.pes_id})" class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
+		          				<a href="javascript: subirDocumento(${l.pes_id}, '${l.pes_nome}', '${l.pes_documento}', '${l.pes_foto}')" class="btn btn-sm"><i class="bi bi-file-earmark-arrow-up"></i></a>
+		          				<a href="javascript: qrCode(${l.pes_id}, '${l.pes_cpf}')" class="btn btn-sm"><i class="bi bi-qr-code"></i></a>
 		          			</td>
 		          		</tr>
 		          	</c:forEach>
@@ -85,6 +87,31 @@ function editarPessoa(id){
    	$("#modal-responsive").empty().html()
    	$("#modal-responsive").load("${pageContext.request.contextPath}/cadastro/pessoaEditar", params, function(){
    		$("#modal-editar-pessoa").modal("show")
+   	})
+}
+
+function subirDocumento(id, usuario, documento, foto){
+	let params = {
+			id: id, 
+			usuario: usuario,
+			documento: documento,
+			foto: foto
+	}
+   	
+   	$("#modal-responsive").empty().html()
+   	$("#modal-responsive").load("${pageContext.request.contextPath}/cadastro/subirDocumento", params, function(){
+   		$("#modal-subir-documento").modal("show")
+   	})
+}
+
+function qrCode(id, cpf){
+	let param = {
+			qrText: id+"/"+cpf
+	}
+	
+	$("#modal-responsive").empty().html()
+   	$("#modal-responsive").load("${pageContext.request.contextPath}/cadastro/qrCode", param, function(){
+   		$("#modal-qrCode").modal("show")
    	})
 }
 </script>

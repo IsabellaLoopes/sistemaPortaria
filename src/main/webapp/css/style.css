@@ -258,3 +258,10 @@ td{
 	margin-top: 5%;
 	color: red
 }
+
+#div-login #p-loginSucesso {
+	font-family: 'PublicSans';
+	font-size: 70%;
+	margin-top: 5%;
+	color: green
+}

@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.json.JSONObject;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
 import com.portariaQrCode.DAO.DAO;
 import com.portariaQrCode.DAO.PessoaDAO;
@@ -26,7 +24,10 @@ import com.portariaQrCode.util.HttpUtil;
 
 @WebServlet(description = "Pessoa", loadOnStartup = 5, urlPatterns = {"/cadastro/pessoaCabecalho", 
 						"/cadastro/pessoaIncluir", "/cadastro/pessoaSalvar", "/cadastro/pessoaListar", 
-						"/cadastro/pessoaStatus", "/cadastro/pessoaEditar"})
+						"/cadastro/pessoaStatus", "/cadastro/pessoaEditar", "/cadastro/subirDocumento", 
+						"/cadastro/qrCode"
+						}
+						)
 public class PessoaServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -56,6 +57,12 @@ public class PessoaServlet extends HttpServlet {
 		}else if(req.getRequestURI().indexOf("cadastro/pessoaEditar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/cadastro/pessoa/pessoaEditar.jsp", "listarPorId");
+		} else if(req.getRequestURI().indexOf("cadastro/subirDocumento") > 0) {
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/cadastro/pessoa/subirArquivo.jsp", "");
+		} else if(req.getRequestURI().indexOf("cadastro/qrCode") > 0) {
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/cadastro/pessoa/qrCode.jsp", "qrCode");
 		}
 	}
 	
@@ -76,7 +83,7 @@ public class PessoaServlet extends HttpServlet {
 				retorno.put("LISTA", usuarioListar(dao, param));
 			} else if(banco.equals("listarPorId")) {
 				retorno.put("DATA", listarPorId(dao, param));
-			}	
+			}
 			
 			retorno.put("PARAMETROS", param);
 			req.setAttribute("dados", HttpServices.parseJSONListStringToHashMap(retorno.toString()));

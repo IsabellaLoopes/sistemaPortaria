@@ -83,9 +83,10 @@ a.dropdown {
 		<c:forEach items="${dados.MENU}" var="m">
 			<c:if test="${m.men_menu == 0 && m.men_id != 5}">
 				<div class="dropdown mt-3">
-					<a class="dropdown" type="button" data-bs-toggle="dropdown" href="#">
+					<a class="dropdown" type="button" data-bs-toggle="dropdown" href="<c:if test="${m.men_id != 4}">#</c:if>" <c:if test="${m.men_id == 4}">onclick="javaScript: abrirPagina('${m.men_url}')"</c:if>>
 						${m.men_descricao} </a>
 					<div class="input-progress"></div>
+					<c:if test="${m.men_id != 4}">
 					<ul class="dropdown-menu">
 						<c:forEach items="${dados.MENU}" var="s">
 							<c:if test="${s.men_menu == m.men_id}">
@@ -94,6 +95,7 @@ a.dropdown {
 							</c:if>
 						</c:forEach>
 					</ul>
+					</c:if>
 				</div>
 			</c:if>
 		</c:forEach>
@@ -148,8 +150,15 @@ a.dropdown {
 
 		<!--<c:forEach items="${dados.MENU}" var="m">
 			<c:if test="${m.men_id == 5}">-->
+			<a class="dropdown" type="button" href="#"
+				style="margin-top: 21%; margin-right: 5%" onclick="javaScript: sair()"><i class="fa fa-power-off"></i></a>
+				
 				<a class="dropdown" type="button" href="#"
-				style="margin-top: 20%; margin-right: 10%">Perfil</a>
+				style="margin-top: 20%; margin-right: 5%">Perfil</a>
+
+				
+
+				
 			<!--</c:if>
 		</c:forEach>-->
 	</div>

@@ -32,6 +32,9 @@ function abrirPagina(url, tipo=false, params={}, newPage=false){
 	      	}
 		} else {
 			form.method = 'get';
+			if(newPage){
+           	  form.setAttribute('target', '_blank');
+            }
 		}
 		document.body.appendChild(form);
 	    form.submit();
@@ -40,5 +43,13 @@ function abrirPagina(url, tipo=false, params={}, newPage=false){
 
 function fecharModal(id){
 	$("#"+id).modal("hide");
+}
+
+function sair(){
+	window.location.href = "/portariaQrCode/"
+}
+
+function esqueciSenha(){
+	abrirPagina("/esqueciSenha", false, {}, true)
 }
 </script>

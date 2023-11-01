@@ -1,4 +1,4 @@
-package com.portariaQrCode.qrCode;
+package com.portariaQrCode.util;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import net.glxn.qrgen.QRCode;
 import net.glxn.qrgen.image.ImageType;
 
-@WebServlet(description = "QrCodeee", loadOnStartup = 5, urlPatterns = {"/vizualizar/qrCode"})
+@WebServlet(description = "QrCode", loadOnStartup = 5, urlPatterns = {"/vizualizar/qrCode"})
 public class GenerateQrCode extends HttpServlet {
 	private static final long serialVersionUID = 1L;
         

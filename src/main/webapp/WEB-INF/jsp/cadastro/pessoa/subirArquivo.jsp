@@ -1,6 +1,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<style>
+.modal img{
+	width: 40%;
+}
+</style>
+
 <body>
 <div class="modal fade in" tabindex="-1" role="dialog" id="modal-subir-documento">
 	<div class="modal-dialog modal-lg" role="document">
@@ -16,12 +23,14 @@
 					<div class="row">
 						<div class="col-12 col-sm-12 col-md-12 col-lg-12">
 							<label for="documento"><b>Documento (RG/CPF):</b></label> 
-							<input class="form-control" type="file" id="documento" name="documento" accept=".pdf">
+							<input class="form-control" type="file" id="documento" name="documento" accept="image/png, image/jpeg">
 						</div>
+						<img width="150" src="${pageContext.request.contextPath}/vizualizar/imagem/doc?id=${dados.PARAMETROS.id}">
 						<div class="col-12 col-sm-12 col-md-12 col-lg-12">
 							<label for="foto"><b>Foto:</b></label> 
 							<input class="form-control" type="file" id="foto" name="foto" accept="image/png, image/jpeg">
 						</div>
+						<img width="150" src="${pageContext.request.contextPath}/vizualizar/imagem/foto?id=${dados.PARAMETROS.id}">
 						<input type="hidden" id="pessoa" name="pessoa" value="${dados.PARAMETROS.id}" />
 					</div>
 				</form>
@@ -37,7 +46,7 @@ function salvarDocumentos(){
 	//event.preventDefault();
     var form = $('#pessoaDocumentos')[0]
     var data = new FormData(form)
-
+    
     $.ajax({
     	type: "POST",
         enctype: 'multipart/form-data',

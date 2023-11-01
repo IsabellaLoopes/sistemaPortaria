@@ -39,7 +39,7 @@
 		          			<td>
 		          				<a href="javascript: editarPessoa(${l.pes_id})" class="btn btn-sm"><i class="bi bi-pencil-square"></i></a>
 		          				<a href="javascript: subirDocumento(${l.pes_id}, '${l.pes_nome}', '${l.pes_documento}', '${l.pes_foto}')" class="btn btn-sm"><i class="bi bi-file-earmark-arrow-up"></i></a>
-		          				<a href="javascript: qrCode(${l.pes_id}, '${l.pes_cpf}')" class="btn btn-sm"><i class="bi bi-qr-code"></i></a>
+		          				<a href="javascript: qrCode(${l.pes_id}, '${l.pes_cpf}', '${l.pes_nome}')" class="btn btn-sm"><i class="bi bi-qr-code"></i></a>
 		          			</td>
 		          		</tr>
 		          	</c:forEach>
@@ -104,9 +104,10 @@ function subirDocumento(id, usuario, documento, foto){
    	})
 }
 
-function qrCode(id, cpf){
+function qrCode(id, cpf, nome){
 	let param = {
-			qrText: id+"/"+cpf
+			qrText: id+"/"+cpf,
+			nome: nome
 	}
 	
 	$("#modal-responsive").empty().html()

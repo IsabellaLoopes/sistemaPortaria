@@ -42,16 +42,15 @@ public class UploadDocumentos extends HttpServlet{
         Part documento = request.getPart("documento");
         Part foto = request.getPart("foto");
         
+        System.out.println(documento);
+        System.out.println(foto);
+
         response.setContentType("application/json");
         JSONObject obj = new JSONObject();
         PrintWriter outS = response.getWriter();
         obj.put("id", -1);
-       
-        System.out.println("foto");
-        System.out.println(foto);
-        System.out.println("doc");
-        System.out.println(documento);
-        if (foto != null && documento != null) {	                    	
+        
+        if (request.getParameter("foto") != null && request.getParameter("documento") != null) {	                    	
         	temp = File.createTempFile("acessoSeguro-", ".tmp");
         	tempD = File.createTempFile("acessoSeguro-", ".tmp");
 	             
@@ -84,7 +83,7 @@ public class UploadDocumentos extends HttpServlet{
         	
             obj.put("id", id);
             
-	    } else if (documento != null) {	                    	
+	    } else if (request.getParameter("documento") != null) {	                    	
 	    	tempD = File.createTempFile("acessoSeguro-", ".tmp");
 	             
             streamDocumento = documento.getInputStream();
@@ -106,7 +105,7 @@ public class UploadDocumentos extends HttpServlet{
 			tempD.delete();
             outS.print(obj);
             
-	    } else if (foto != null) {	                    	
+	    } else if (request.getParameter("foto") != null) {	                    	
         	temp = File.createTempFile("acessoSeguro-", ".tmp");
 	             
             streamFoto = foto.getInputStream();

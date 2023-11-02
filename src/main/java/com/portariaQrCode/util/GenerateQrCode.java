@@ -27,7 +27,7 @@ public class GenerateQrCode extends HttpServlet {
 	 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String qrText = request.getParameter("qrText");
-		ByteArrayOutputStream out = QRCode.from(qrText).to(ImageType.PNG).withSize(400,400).stream();
+		ByteArrayOutputStream out = QRCode.from(Criptografia.encripta(qrText)).to(ImageType.PNG).withSize(400,400).stream();
 		response.setContentType("image/png");
 		response.setContentLength(out.size());
 	     

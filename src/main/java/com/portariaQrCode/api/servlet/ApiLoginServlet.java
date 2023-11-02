@@ -35,8 +35,6 @@ public class ApiLoginServlet extends HttpServlet {
 	private void processarDados(HttpServletRequest req, HttpServletResponse resp, String method, String banco) throws ServletException, IOException {
 		DAO dao = new DAO();
 		JSONObject retorno = new JSONObject();
-		System.out.println(req.getParameter("login"));
-		System.out.println(req.getParameter("senha"));
 		Registro param = HttpServices.requestToRegistro(req);	
 		try {
 			dao.conecta();
@@ -50,6 +48,7 @@ public class ApiLoginServlet extends HttpServlet {
 			dao.desconecta();
 		}
 		
+		System.out.println(retorno.toString());
 		HttpUtil.flushJSON(resp.getOutputStream(), retorno.toString());
 	}
 	
@@ -57,6 +56,7 @@ public class ApiLoginServlet extends HttpServlet {
 		Registro ret = new Registro();
 		try {
 			ret = new UsuarioDAO(dao).verificarLoginMobile(param);
+			System.out.println(ret);
 			dao.commit();
 		} catch (Exception e) {
 			e.printStackTrace();

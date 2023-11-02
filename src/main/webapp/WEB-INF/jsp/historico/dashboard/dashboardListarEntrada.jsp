@@ -28,7 +28,11 @@
 		          			<td>${l.dataEntrada}</td>
 		          			<td>${l.aparelhoEntrada}</td>
 		          			<td>${l.codigo}</td>
-		          			<td>${l.pessoa}</td>
+		          			<td>
+		          				<a style="cursor: help; text-decoration: underline;" data-toggle="tooltip" title="<img src='${pageContext.request.contextPath}/vizualizar/imagem/foto?id=${l.pes_id}' />">
+						     		${l.pessoa}
+						     	</a>
+		          			</td>
 		          			<td>${l.tipoPessoa}</td>
 		          			<td>${l.observacao}</td>
 		          			<td></td>
@@ -39,3 +43,17 @@
 	        </c:otherwise>
 		</c:choose>
       </div>
+     
+<script type="text/javascript">
+$('[data-toggle="tooltip"]').tooltip({
+    animated: 'fade',
+    placement: 'bottom',
+    html: true
+});
+</script>
+	  
+       <!-- <script type="text/javascript">
+      $(document).ready(function(){
+      	setTimeout(function() {window.location.reload(1);}, 10000); 
+      })
+	  </script> -->

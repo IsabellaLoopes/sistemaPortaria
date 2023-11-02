@@ -4,7 +4,13 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 
 <meta charset="utf-8" />
+<meta http-equiv="refresh" content="10" />
 
+<style>
+.tooltip img {
+    width: 100% !important
+}
+</style>
 <tiles:insertDefinition name="menu">
 
 	<tiles:putAttribute name="body">

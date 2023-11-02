@@ -8,43 +8,64 @@
 <tiles:insertDefinition name="menu">
 
 	<tiles:putAttribute name="body">
-		<h1 class="nomeTopo">PESSOA</h1>
+		<h1 class="nomeTopo">PERFIL</h1>
 		<div class="containerForm">
-			<form class="formPesquisa" id="pessoa">
+			<form class="formPesquisa" id="perfilEditar">
 				<div class="row">
-					<div class="col-12 col-sm-12 col-md-4 col-lg-4">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-3">
 						<label for="nome"><b>Nome:</b></label> <input id="nome"
-							class="form-control" type="text" />
+							class="form-control validar" type="text" value="${dados.DATA.PESSOA.pes_nome}"/>
 					</div>
-					<div class="col-12 col-sm-12 col-md-5 col-lg-4">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-3">
 						<label for="cpf"><b>CPF:</b></label> <input id="cpf"
-							class="form-control" type="text" />
+							class="form-control validar" type="text" placeholder="Ex 124.356.987-01" value="${dados.DATA.PESSOA.pes_cpf}" DISABLED/>
 					</div>
-					<div class="col-12 col-sm-12 col-md-2 col-lg-2">
+					<div class="col-12 col-sm-12 col-md-6 col-lg-3">
 						<label for="tipoPessoa"><b>Tipo Pessoa:</b></label> <select
-							id="tipoPessoa" class="form-select">
-							<option value="">Todos</option>
+							id="tipoPessoa" class="form-select validar" onchange="mudarTipo()" DISABLED>
 							<c:forEach items="${dados.DATA.LISTA}" var="t">
-								<option value="${t.tip_sigla}">${t.tip_descricao}</option>
+								<option value="${t.tip_sigla}" <c:if test="${dados.DATA.PESSOA.pes_tipo == t.tip_sigla}">SELECTED</c:if>>${t.tip_descricao}</option>
+							</c:forEach>
+						</select>
+					</div> 
+					<div class="col-12 col-sm-12 col-md-6 col-lg-3">
+						<label for="email"><b>Email:</b></label> <input id="email"
+							class="form-control validar" type="text" value="${dados.DATA.PESSOA.pes_email}"/>
+					</div>
+					<div class="col-12 col-sm-12 col-md-6 col-lg-3">
+						<label for="tel"><b>Telefone:</b></label> <input id="tel"
+							class="form-control" type="text" value="${dados.DATA.PESSOA.pes_telefone}"/>
+					</div>
+					<div class="col-12 col-sm-12 col-md-6 col-lg-3 d-none" id="divUsuario">
+						<label for="usr"><b>Usuário:</b></label> <select
+							id="usr" class="form-select" DISABLED>
+							<option value="0">Selecione...</option>
+							<c:forEach items="${dados.DATA.USUARIOS}" var="t">
+								<option value="${t.usr_id}" <c:if test="${dados.DATA.PESSOA.pes_usr_id == t.usr_id}">SELECTED</c:if>>${t.usr_apelido} - ${t.usr_nome}</option>
 							</c:forEach>
 						</select>
 					</div>
-					<div class="col-12 col-sm-12 col-md-2 col-lg-2">
-						<label for="status"><b>Status:</b></label> <select id="status"
-							class="form-select">
-							<option value="">Todos</option>
-							<option value="S">Ativo</option>
-							<option value="N">Inativo</option>
-						</select>
+					<div class="col-12 col-sm-12 col-md-3 col-lg-3 mt-2">
+						<button type="button" class="btn btn-form" onclick="salvarPerfil(${dados.DATA.PESSOA.pes_id})">Atualizar <i class="fa fa-arrow-right"></i></button>      
 					</div>
 				</div>
+				<br><br>
 				<div class="row">
-					<button type="button" class="btn btn-form" onclick="pesquisarPessoa()">
-						Pesquisar <i class="fa fa-search"></i>
-					</button>
-					<button type="button" class="btn btn-form" onclick="incluirPessoa()">
-						Incluir <i class="fa fa-plus"></i>
-					</button>
+					<div class="col-12 col-sm-12 col-md-6 col-lg-3">
+						<label for="tel"><b>Documento</b></label>
+						<img style="width: 100% !important" src="${pageContext.request.contextPath}/vizualizar/imagem/doc?id=${dados.PARAMETROS.id}">
+					</div>
+					<div class="col-12 col-sm-12 col-md-6 col-lg-3">
+						<label for="tel"><b>Foto</b></label>
+						<img style="width: 100% !important" src="${pageContext.request.contextPath}/vizualizar/imagem/foto?id=${dados.PARAMETROS.id}">
+					</div>
+					<div class="col-12 col-sm-12 col-md-6 col-lg-3">
+						<label for="tel"><b>QR Code</b></label>
+						<img style="width: 100% !important" src="${pageContext.request.contextPath}/vizualizar/qrCode?qrText=${dados.PARAMETROS.qrText}">
+					</div>
+					<div class="col-12 col-sm-12 col-md-12 col-lg-12 mt-2">
+						<button type="button" class="btn btn-form" onclick="subirDocumento(${dados.PARAMETROS.id}, '${dados.DATA.PESSOA.pes_nome}', '${dados.DATA.PESSOA.possuiDoc}', '${dados.DATA.PESSOA.possuiFoto}')">Editar Foto <i class="fa fa-arrow-right"></i></button>      
+					</div>
 				</div>
 			</form>
 		</div>
@@ -55,52 +76,25 @@
 			menuPequeno();
 		})
 		
-		function incluirPessoa(){
-			$("#modal-responsive").load("${pageContext.request.contextPath}/cadastro/pessoaIncluir", function(){
-				$("#modal-incluir-pessoa").modal("show");
-			});
-		}
-		
-		function pesquisarPessoa(){
-			let param = {
-					nome: $("#pessoa #nome").val(),
-					tipo: $("#pessoa #tipoPessoa").val(),
-					cpf: $("#pessoa #cpf").val(),
-					status: $("#pessoa #status").val(),
-			}
-			$("#table-responsive").empty();
-			$("#table-responsive").load("${pageContext.request.contextPath}/cadastro/pessoaListar", param);
-		}
-		
-		function salvarPessoa(id=0){
-			if(validar('#pessoaIncluir')){
+		function salvarPerfil(id=0){
+			if(validar('#perfilEditar')){
 				let param = {
 						id: id,
-						nome: $("#pessoaIncluir #nome").val(),
-						cpf: $("#pessoaIncluir #cpf").val(),
-						tipoPessoa: $("#pessoaIncluir #tipoPessoa").val(),
-						email: $("#pessoaIncluir #email").val(),
-						tel: $("#pessoaIncluir #tel").val(),
-						usrId: $("#pessoaIncluir #usr").val() || 0
+						nome: $("#perfilEditar #nome").val(),
+						email: $("#perfilEditar #email").val(),
+						tel: $("#perfilEditar #tel").val()
 				}
 				
-				$.post("${pageContext.request.contextPath}/cadastro/pessoaSalvar", param, function(retorno){
+				$.post("${pageContext.request.contextPath}/perfil/perfilSalvar", param, function(retorno){
 					let obj = JSON.parse(retorno);
 					
 					if(obj.DATA.erro == 0){
-						if(id == 0){
-							$("#modal-incluir-pessoa").modal("hide");
-						}else {
-							$("#modal-editar-pessoa").modal("hide");
-						}
-						
 						Swal.fire({
 							  title: 'Sucesso!',
 							  text: obj.DATA.mensagem,
 							  icon: 'success',
 							  confirmButtonText: 'Ok'
 							})
-						pesquisarPessoa()
 					} else{
 						Swal.fire({
 							  title: 'Ops!',
@@ -111,6 +105,20 @@
 					}
 				});
 			}
+		}
+		
+		function subirDocumento(id, usuario, documento, foto){
+			let params = {
+					id: id, 
+					usuario: usuario,
+					documento: documento,
+					foto: foto
+			}
+			
+		   	$("#modal-responsive").empty().html()
+		   	$("#modal-responsive").load("${pageContext.request.contextPath}/cadastro/subirDocumento", params, function(){
+		   		$("#modal-subir-documento").modal("show")
+		   	})
 		}
 		</script>
 	</tiles:putAttribute>

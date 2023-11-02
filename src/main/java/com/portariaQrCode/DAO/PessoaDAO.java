@@ -17,10 +17,10 @@ public class PessoaDAO {
 	}
 
 	public Registro salvarPessoa(Registro param) {
-		return dao.getRowAsRegistro("EXEC cadastro.salvarPessoa @id=?, @nome=?, @tipo=?, @email=?, @tel=?, @status=?, @cpf=?, @documento=?, @foto=?, @usr_id=?",
+		return dao.getRowAsRegistro("EXEC cadastro.salvarPessoa @id=?, @nome=?, @tipo=?, @email=?, @tel=?, @status=?, @cpf=?, @usr_id=?",
 				new Object[] {param.getAsIntOrZero("id"), param.getAsString("nome"), param.getAsString("tipoPessoa"), 
 						param.getAsString("email"), param.getAsString("tel"), param.getAsStringOrValue("status", "S"), param.getAsString("cpf"),
-						param.getAsString("documento"), param.getAsString("foto"), param.getAsIntOrZero("usrId")});
+						param.getAsIntOrZero("usrId")});
 	}
 	
 	public List<Registro> listarPessoa(Registro param) {
@@ -33,5 +33,10 @@ public class PessoaDAO {
 	public Registro alteraStatusPessoa(Registro param) {
 		return dao.getRowAsRegistro("EXEC cadastro.alteraStatusPessoa @id=?, @status=?",
 				new Object[] {param.getAsIntOrZero("id"), param.getAsString("status")});
+	}
+	
+	public Registro salvarPerfil(Registro param) {
+		return dao.getRowAsRegistro("EXEC cadastro.salvarPerfil @id=?, @nome=?, @email=?, @tel=?",
+				new Object[] {param.getAsIntOrZero("id"), param.getAsString("nome"), param.getAsString("email"), param.getAsString("tel")});
 	}
 }

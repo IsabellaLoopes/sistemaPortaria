@@ -38,6 +38,10 @@
 
 	<tiles:putAttribute name="footer">
 		<script>
+			$(document).ready(function(){
+				storage.clear();
+			})
+				
 			function login(){
 				if($("#form-login #login").val() != '' && $("#form-login #senha").val() != ''){
 					let param = {

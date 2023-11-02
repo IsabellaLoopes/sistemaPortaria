@@ -29,15 +29,15 @@ public class PerfilServlet extends HttpServlet {
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (req.getRequestURI().indexOf("perfil/perfilCabecalho") > 0) {
-			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/perfil/pessoa.jsp", "");
-		}
+		doPost(req, resp);
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getRequestURI().indexOf("perfil/perfilSalvar") > 0) {
+		if (req.getRequestURI().indexOf("perfil/perfilCabecalho") > 0) {
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/perfil/perfil.jsp", "cabecalho");
+		} else if(req.getRequestURI().indexOf("perfil/perfilSalvar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			processarDados(req, resp, HttpServices.HTTP_POST, "", "salvar");
 		}
@@ -51,14 +51,8 @@ public class PerfilServlet extends HttpServlet {
 		try {
 			dao.conecta();
 			if(banco.equals("cabecalho")) {
-				retorno.put("DATA", usuarioCabecalho(dao, param)); 
-				retorno.put("MENU", menuUsuario(dao, param));
-			} else if(banco.equals("incluir")) {
-				retorno.put("DATA", pessoaIncluir(dao, param)); 
-			} else if(banco.equals("listar")) {
-				retorno.put("LISTA", usuarioListar(dao, param));
-			} else if(banco.equals("listarPorId")) {
 				retorno.put("DATA", listarPorId(dao, param));
+				retorno.put("MENU", menuUsuario(dao, param));
 			}
 			
 			retorno.put("PARAMETROS", param);
@@ -80,8 +74,6 @@ public class PerfilServlet extends HttpServlet {
 			dao.conecta();
 			if(banco.equals("salvar")) {
 				retorno.put("DATA", usuarioSalvar(dao, param)); 
-			} else if(banco.equals("status")) {
-				retorno.put("DATA", usuarioStatus(dao, param));
 			}
 			retorno.put("PARAMETROS", param);
 		} catch (Exception e) {
@@ -93,31 +85,10 @@ public class PerfilServlet extends HttpServlet {
 		HttpUtil.flushJSON(resp.getOutputStream(), retorno.toString());
 	}
 	
-	private Registro usuarioCabecalho(DAO dao, Registro param) {
-		Registro ret = new Registro();
-		try {
-			ret.put("LISTA", new PessoaDAO(dao).listarTipoPessoa(param));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ret;
-	}
-	
-	private Registro pessoaIncluir(DAO dao, Registro param) {
-		Registro ret = new Registro();
-		try {
-			ret.put("LISTA", new PessoaDAO(dao).listarTipoPessoa(param));
-			ret.put("USUARIOS", new UsuarioDAO(dao).listarUsuario(param));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ret;
-	}
-	
 	private Registro usuarioSalvar(DAO dao, Registro param) {
 		Registro ret = new Registro();
 		try {
-			ret = new PessoaDAO(dao).salvarPessoa(param);
+			ret = new PessoaDAO(dao).salvarPerfil(param);
 			if(ret.getAsInt("erro") == 0) {
 				dao.commit();
 			}
@@ -126,36 +97,13 @@ public class PerfilServlet extends HttpServlet {
 		}
 		return ret;
 	}
-	
-	private Registro usuarioStatus(DAO dao, Registro param) {
-		Registro ret = new Registro();
-		try {
-			ret = new PessoaDAO(dao).alteraStatusPessoa(param);
-			if(ret.getAsInt("erro") == 0) {
-				dao.commit();
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ret;
-	}
-	
-	private List<Registro> usuarioListar(DAO dao, Registro param) {
-		 List<Registro> ret = new ArrayList<>();
-		try {
-			ret = new PessoaDAO(dao).listarPessoa(param);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return ret;
-	}
+
 	
 	private Registro listarPorId(DAO dao, Registro param) {
 		 Registro ret = new Registro();
 		try {
 			ret.put("PESSOA", new PessoaDAO(dao).listarPessoa(param).get(0));
 			ret.put("LISTA", new PessoaDAO(dao).listarTipoPessoa(param));
-			ret.put("USUARIOS", new UsuarioDAO(dao).listarUsuario(new Registro()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

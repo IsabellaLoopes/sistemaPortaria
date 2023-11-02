@@ -30,7 +30,9 @@
 
 	<section id="conteudo">
 		<tiles:insertAttribute name="body" />
-
+		<input type="hidden" id="loginId" name="loginId" value="0"/>
+		<input type="hidden" id="loginQrText" />
+		
 		<div class="mt-3" id="table-responsive"></div>
 		<div class="mt-3" id="table-responsive1"></div>
 		<div id="modal-responsive"></div>

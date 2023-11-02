@@ -45,7 +45,7 @@ public class UsuarioDAO {
 	public List<Registro> menuUsuario(Registro param) {
 		return dao.listaRowAsRegistro("EXEC sistema.listarMenuUsuario @nivel=?, @status=?, @usuario=?", 
 				new Object[] {param.getAsIntOrValue("nivel", -1), param.getAsStringOrValue("status", "S"),
-						param.getAsIntOrValue("usuario", 11)});
+						param.getAsIntOrValue("loginId", param.getAsIntOrZero("usuario"))});
 	}
 	
 	public Registro verificarPessoa(Registro param) {

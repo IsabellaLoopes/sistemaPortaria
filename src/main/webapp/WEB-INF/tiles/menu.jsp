@@ -99,68 +99,12 @@ a.dropdown {
 				</div>
 			</c:if>
 		</c:forEach>
-		<!-- 
-		<div class="dropdown mt-3">
-			<a class="dropdown" type="button" data-bs-toggle="dropdown" href="#">
-				Administração </a>
-			<div class="input-progress"></div>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#"
-					onclick="javaScript: abrirPagina('/adm/usuarioCabecalho')">Usuário</a></li>
-				<li><a class="dropdown-item" href="#" 
-					onclick="javaScript: abrirPagina('/adm/menuCabecalho')">Menu e Permissão
-						Sistema</a></li>
-			</ul>
-		</div>
 
-		<div class="dropdown mt-3">
-			<a class="dropdown" type="button" data-bs-toggle="dropdown" href="#">
-				Cadastro </a>
-			<div class="input-progress"></div>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/pessoaCabecalho')">Pessoa</a></li>
-				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/aparelhoCabecalho')">Aparelho</a></li>
-				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/permissaoCabecalho')">Permissão de Acesso</a></li>
-				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/cadastro/visitaCabecalho')">Visita</a></li>
-			</ul>
-		</div>
-
-		<div class="dropdown mt-3">
-			<a class="dropdown" type="button" data-bs-toggle="dropdown" href="#">
-				Histórico </a>
-			<div class="input-progress"></div>
-			<ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/dashboard/dashboardCabecalho')">Dashboard
-						Entrada/Saída</a></li>
-				<li><a class="dropdown-item" href="#" onclick="javaScript: abrirPagina('/historico/relatorioAcessoCabecalho')">Relatório de Acesso</a></li>
-			</ul>
-		</div> 
-
-		<div class="dropdown mt-3">
-			<!-- <a class="dropdown" type="button" data-bs-toggle="dropdown" href="#"> 
-			<a class="dropdown" type="button" href="#" onclick="javaScript: abrirPagina('/historico/relatorioAcessoCabecalho')">
-				Suporte </a>
-			<div class="input-progress"></div>
-			<!-- <ul class="dropdown-menu">
-				<li><a class="dropdown-item" href="#">Action</a></li>
-				<li><a class="dropdown-item" href="#">Another action</a></li>
-				<li><a class="dropdown-item" href="#">Something else here</a></li>
-			</ul> 
-		</div>-->
-
-		<!--<c:forEach items="${dados.MENU}" var="m">
-			<c:if test="${m.men_id == 5}">-->
-			<a class="dropdown" type="button" href="#"
-				style="margin-top: 21%; margin-right: 5%" onclick="javaScript: sair()"><i class="fa fa-power-off"></i></a>
-				
-				<a class="dropdown" type="button" href="#"
-				style="margin-top: 20%; margin-right: 5%">Perfil</a>
-
-				
-
-				
-			<!--</c:if>
-		</c:forEach>-->
+		<a class="dropdown" type="button" href="#"
+			style="margin-top: 21%; margin-right: 5%" onclick="javaScript: sair()"><i class="fa fa-power-off"></i></a>
+		
+		<a class="dropdown" type="button" href="#"
+		style="margin-top: 20%; margin-right: 5%" onclick="javaScript: perfil()">Perfil</a>
 	</div>
 </div>
 
@@ -169,8 +113,6 @@ a.dropdown {
 	style="width: 12%; cursor:pointer">
 	<div style="text-align: center">
 		<div class="offcanvas-header">
-			<!-- <h5 class="offcanvas-title" id="offcanvasExampleLabel"></h5>
-	    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>  -->
 		</div>
 		<div class="w-auto offcanvas-body">
 			<img class="offcanvasPequenoimg"
@@ -184,19 +126,6 @@ a.dropdown {
 						</div>
 					</c:if>
 				</c:forEach>
-				
-				<!-- 
-				<div class="col-12 mt-3 iMenu">
-					<i class="fa fa-wrench"></i>
-				</div>
-				<div class="col-12 mt-3 iMenu">
-					<i class="fa fa-id-card"></i>
-				</div>
-				<div class="col-12 mt-3 iMenu">
-					<i class="fa fa-history"></i>
-				</div>
-				 -->
-
 				<div class="col-12" style="margin-top: 90%">
 					<i class="fa fa-user"></i>
 				</div>
@@ -239,5 +168,13 @@ a.dropdown {
 		bsOffcanvas.show();
 	}
 	
+	function perfil(){
+		let param = {
+				id: parseInt(sessionStorage.getItem("pessoaId")),
+				usuario: parseInt(sessionStorage.getItem("loginId")),
+				qrText: sessionStorage.getItem("qrText")
+		}
+		abrirPagina('/perfil/perfilCabecalho', true, param)
+	}
 	
 </script>

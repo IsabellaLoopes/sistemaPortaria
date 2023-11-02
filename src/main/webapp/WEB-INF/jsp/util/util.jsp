@@ -7,17 +7,19 @@ function paginaPrincipal(param){
 }
 
 function abrirPagina(url, params = {}){				
-	window.location.href = CONTEXT + url;
+	//window.location.href = CONTEXT + url;
+	abrirPagina(url, false, {}, true)
 }
 
 function abrirPagina(url, tipo=false, params={}, newPage=false){
+	params.loginId = parseInt(sessionStorage.getItem("loginId"))
 	if ( url != null && url != "" ) {
 		
 		url = CONTEXT + url;
 		let form = document.createElement("form");
 		form.action = url;
-		if(tipo){
-			form.method = 'post';
+		//if(tipo){
+			form.method = tipo ? 'post' : 'get';
 			for (var i in params) {
 	          if (params.hasOwnProperty(i)) {
 	              var input = document.createElement('input');
@@ -30,12 +32,12 @@ function abrirPagina(url, tipo=false, params={}, newPage=false){
 	              form.appendChild(input);
 	          }
 	      	}
-		} else {
+		/*} else {
 			form.method = 'get';
 			if(newPage){
            	  form.setAttribute('target', '_blank');
             }
-		}
+		}*/
 		document.body.appendChild(form);
 	    form.submit();
 	} 	

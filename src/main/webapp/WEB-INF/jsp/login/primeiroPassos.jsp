@@ -34,6 +34,10 @@
 	<tiles:putAttribute name="footer">
 		<script>
 			$(document).ready(function () {
+				sessionStorage.setItem("loginId", ${dados.PARAMETROS.usr_id});
+				sessionStorage.setItem("qrText", `${dados.PARAMETROS.usr_id}` + '/' + `${dados.PARAMETROS.usr_cpf}`);
+				sessionStorage.setItem("pessoaId", ${dados.PARAMETROS.pes_id});
+				
 				if(${dados.PARAMETROS.primeiroAcesso == 'S'}){
 					$("#modal-primeiros-passos").modal("show");
 			    	

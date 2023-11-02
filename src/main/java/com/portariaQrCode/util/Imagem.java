@@ -32,13 +32,14 @@ public class Imagem extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DAO dao = new DAO();
 		Registro param = HttpServices.requestToRegistro(request);	
+		
 		try {
 			dao.conecta();
 			Registro pessoa = new PessoaDAO(dao).listarPessoa(param).get(0);
 			byte[] imagem = null;
 		    response.setContentType("image/jpeg"); 
 		    OutputStream out = response.getOutputStream(); 
-		    
+
 		    if(request.getRequestURI().indexOf("vizualizar/imagem/doc") > 0){
 		    	imagem = pessoa.getAsByte("pes_documento");
 		    } else if(request.getRequestURI().indexOf("vizualizar/imagem/foto") > 0) {

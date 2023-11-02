@@ -5,7 +5,9 @@
 <tiles:insertDefinition name="menu">
 	
 	<tiles:putAttribute name="body">
-		<p style="margin-left:300px">hi sss</p>
+		<div class="containerBanner">
+			<img style="width:100%;"src="${pageContext.request.contextPath}/img/banner-principal.png">
+		</div>
 	</tiles:putAttribute>
 	<tiles:putAttribute name="footer">
 		<script>

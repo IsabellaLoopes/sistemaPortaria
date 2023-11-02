@@ -40,17 +40,18 @@ public class UploadDocumentos extends HttpServlet{
         Integer id = 0;
         
         Part documento = request.getPart("documento");
-        Part foto = request.getPart("foto");
+        String filenameDoc = getFilename(documento);
         
-        System.out.println(documento);
-        System.out.println(foto);
+        Part foto = request.getPart("foto");
+        String filenameFoto = getFilename(foto);
 
         response.setContentType("application/json");
         JSONObject obj = new JSONObject();
         PrintWriter outS = response.getWriter();
         obj.put("id", -1);
         
-        if (request.getParameter("foto") != null && request.getParameter("documento") != null) {	                    	
+        
+        if (!filenameDoc.equals("") && !filenameFoto.equals("")){	              	
         	temp = File.createTempFile("acessoSeguro-", ".tmp");
         	tempD = File.createTempFile("acessoSeguro-", ".tmp");
 	             
@@ -70,7 +71,7 @@ public class UploadDocumentos extends HttpServlet{
             
             
 			try {
-				id = inserirDocumento(fotoBanco, documentoBanco, param.getAsInt("pessoa"));
+				id = inserirDocumento(documentoBanco, fotoBanco, param.getAsInt("pessoa"));
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -83,7 +84,7 @@ public class UploadDocumentos extends HttpServlet{
         	
             obj.put("id", id);
             
-	    } else if (request.getParameter("documento") != null) {	                    	
+	    } else if (!filenameDoc.equals("")){	
 	    	tempD = File.createTempFile("acessoSeguro-", ".tmp");
 	             
             streamDocumento = documento.getInputStream();
@@ -95,7 +96,7 @@ public class UploadDocumentos extends HttpServlet{
             
             
 			try {
-				id = inserirDocumento(null, documentoBanco, param.getAsInt("pessoa"));
+				id = inserirDocumento(documentoBanco, null, param.getAsInt("pessoa"));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -103,9 +104,10 @@ public class UploadDocumentos extends HttpServlet{
 			
 			documentoBanco.close();
 			tempD.delete();
-            outS.print(obj);
             
-	    } else if (request.getParameter("foto") != null) {	                    	
+			obj.put("id", id);
+            
+	    } else if (!filenameFoto.equals("")){
         	temp = File.createTempFile("acessoSeguro-", ".tmp");
 	             
             streamFoto = foto.getInputStream();
@@ -117,7 +119,7 @@ public class UploadDocumentos extends HttpServlet{
             
             
 			try {
-				id = inserirDocumento(fotoBanco, null, param.getAsInt("pessoa"));
+				id = inserirDocumento(null, fotoBanco, param.getAsInt("pessoa"));
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -125,7 +127,8 @@ public class UploadDocumentos extends HttpServlet{
 			
 			fotoBanco.close();
         	temp.delete();
-            obj.put("id", id);
+           
+        	obj.put("id", id);
 	    }
         
         
@@ -167,4 +170,14 @@ public class UploadDocumentos extends HttpServlet{
 		}
 		return id;
 	}
+	
+	private static String getFilename(Part part) {
+        for (String cd : part.getHeader("content-disposition").split(";")) {
+            if (cd.trim().startsWith("filename")) {
+                return cd.substring(cd.indexOf('=') + 1).trim()
+                        .replace("\"", "");
+            }
+        }
+        return null;
+    }
 }

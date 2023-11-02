@@ -28,7 +28,7 @@
 				</form>
 				
 				<p class="d-none" id="p-loginErro"></p>
-				<button type="button" class="btn btn-primary btn-formulario" onclick="login()">ENTRAR</button>
+				<button type="button" class="btn btn-formulario" onclick="login()">ENTRAR</button>
 				
 				<p id="p-login" style="margin-top: 2% !important; text-decoration: underline; cursor: pointer" onclick="esqueciSenha()">Esqueci Minha Senha</p>
 				

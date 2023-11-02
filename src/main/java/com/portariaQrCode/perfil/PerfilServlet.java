@@ -1,4 +1,4 @@
-package com.portariaQrCode.pessoa;
+package com.portariaQrCode.perfil;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -22,47 +22,24 @@ import com.portariaQrCode.types.Registro;
 import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
 
-@WebServlet(description = "Pessoa", loadOnStartup = 5, urlPatterns = {"/cadastro/pessoaCabecalho", 
-						"/cadastro/pessoaIncluir", "/cadastro/pessoaSalvar", "/cadastro/pessoaListar", 
-						"/cadastro/pessoaStatus", "/cadastro/pessoaEditar", "/cadastro/subirDocumento", 
-						"/cadastro/qrCode"
-						}
-						)
-public class PessoaServlet extends HttpServlet {
+@WebServlet(description = "Perfil", loadOnStartup = 5, urlPatterns = {"/perfil/perfilCabecalho", "/perfil/perfilSalvar"})
+public class PerfilServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (req.getRequestURI().indexOf("cadastro/pessoaCabecalho") > 0) {
+		if (req.getRequestURI().indexOf("perfil/perfilCabecalho") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/cadastro/pessoa/pessoa.jsp", "cabecalho");
-		} else if(req.getRequestURI().indexOf("cadastro/pessoaIncluir") > 0) {
-			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/cadastro/pessoa/pessoaIncluir.jsp", "incluir");
+			buscarDados(req, resp, HttpServices.HTTP_GET, "", "/WEB-INF/jsp/perfil/pessoa.jsp", "");
 		}
 	}
 	
 	@Override
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if(req.getRequestURI().indexOf("cadastro/pessoaSalvar") > 0) {
+		if(req.getRequestURI().indexOf("perfil/perfilSalvar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			processarDados(req, resp, HttpServices.HTTP_POST, "", "salvar");
-		} else if(req.getRequestURI().indexOf("cadastro/pessoaStatus") > 0){
-			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			processarDados(req, resp, HttpServices.HTTP_POST, "", "status");
-		}else if(req.getRequestURI().indexOf("cadastro/pessoaListar") > 0) {
-			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/cadastro/pessoa/pessoaListar.jsp", "listar");
-		}else if(req.getRequestURI().indexOf("cadastro/pessoaEditar") > 0) {
-			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/cadastro/pessoa/pessoaEditar.jsp", "listarPorId");
-		} else if(req.getRequestURI().indexOf("cadastro/subirDocumento") > 0) {
-			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/cadastro/pessoa/subirArquivo.jsp", "");
-		} else if(req.getRequestURI().indexOf("cadastro/qrCode") > 0) {
-			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/cadastro/pessoa/qrCode.jsp", "qrCode");
 		}
 	}
 	

@@ -75,7 +75,7 @@ a.dropdown {
 	</div>
 	<div class="offcanvas-body">
 		<div style="text-align: center">
-			<img class="offcanvasImg"
+			<img style="cursor: pointer" onclick="javaScript: abrirPagina('/home', true, {}, false)" class="offcanvasImg"
 				src="${pageContext.request.contextPath}/img/logo-letra-branca-transparente.png" />
 		</div>
 		<input class="form-control" type="search" aria-label="Pesquisar">

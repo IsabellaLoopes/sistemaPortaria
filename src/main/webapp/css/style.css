@@ -27,11 +27,11 @@
 }
 
 .color-primary {
-	color: #0078F0;
+	color: #058890;
 }
 
 .bgColor-primary {
-	background-color: #0078F0;
+	background-color: #058890;
 }
 
 .btn-formulario{
@@ -39,6 +39,14 @@
 	width:90%; 
 	font-size:80%;
 	margin:15% 0% 5%;
+	background-color: #058890;
+	color: white
+}
+
+.btn-formulario:hover{
+	color: #058890;
+	border: 1px solid #058890;
+	background-color: white
 }
 
 /* usado para centralizar vertical e horizontal */
@@ -182,9 +190,14 @@
 	padding: 2%;
 }
 
+.containerBanner{
+	margin-left:14%;
+	margin-right:5%;
+}
+
 .nomeTopo{
 	font-size: 200%;
-	color: #0078F0;
+	color: #058890;
 	font-family: 'Poetsen', Times, serif;
 	margin-left:15%;
 	margin-top:20px;
@@ -207,7 +220,7 @@
 	font-family:Roboto; 
 	font-size:76%;
 	margin: 3% 0% 0%;
-	background-color: #0078F0;
+	background-color: #058890;
 	border-radius: 50px;
 	color: white;
 	width: auto;
@@ -216,8 +229,8 @@
 
 .btn-form:hover{
 	background-color: white;
-	color: #0078F0;
-	border: 1px solid #0078F0;
+	color: #058890;
+	border: 1px solid #058890;
 }
 
 .btn-form-close{

@@ -64,5 +64,9 @@ public class UsuarioDAO {
 				new Object[] {Criptografia.encripta(param.getAsStringOrValue("senha", "")), param.getAsIntOrZero("id")});
 	}
 	
-	
+	public Registro verificarLoginMobile(Registro param) {
+		System.out.println(param);
+		return dao.getRowAsRegistro("EXEC sistema.verificarLoginMobile @login=?, @senha=?",
+				new Object[] {param.getAsString("login"), Criptografia.encripta(param.getAsString("senha"))});
+	}
 }

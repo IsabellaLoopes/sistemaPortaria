@@ -12,7 +12,8 @@ public class DashboardDAO {
 	}
 	
 	public List<Registro> listarDash(Registro param) {
-		return dao.listaRowAsRegistro("EXEC historico.listarLogAcessoDash @data=?, @tipoOperacao=?", 
-				new Object[] {param.getAsStringOrValue("data", ""), param.getAsStringOrValue("tipoOperacao", "")});
+		return dao.listaRowAsRegistro("EXEC historico.listarLogAcessoDash @data=?, @tipoOperacao=?, @pessoa=?", 
+				new Object[] {param.getAsStringNN("data"), param.getAsStringOrValue("tipoOperacao", ""),
+								param.getAsIntOrValue("pessoa", -1)});
 	}
 }

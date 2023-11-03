@@ -14,8 +14,4 @@ public class Criptografia {
             return senha;
         }
     }
-
-    public static final void main (String[] argv) {
-        System.out.println(Criptografia.encripta("@floranda"));
-    }
 }

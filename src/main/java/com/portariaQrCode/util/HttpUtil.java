@@ -12,12 +12,6 @@ import org.json.JSONObject;
 
 public class HttpUtil {
 
-	public static void dispacher(HttpServletRequest req, HttpServletResponse resp, String url) throws ServletException, IOException {
-		System.out.println(req.getServletContext());
-		RequestDispatcher dispatcher = req.getServletContext().getRequestDispatcher(url);
-	    dispatcher.forward(req, resp);
-	}
-	
 	public static void flushJSON( ServletOutputStream out, String ret ) {
 		try {
 			JSONObject jsonObject = new JSONObject(ret);

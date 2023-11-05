@@ -3,6 +3,7 @@ package com.portariaQrCode.DAO;
 import java.util.List;
 
 import com.portariaQrCode.types.Registro;
+import com.portariaQrCode.util.Criptografia;
 
 public class AparelhoDAO {
 	private DAO dao;
@@ -31,5 +32,10 @@ public class AparelhoDAO {
 	public Registro alteraStatusAparelho(Registro param) {
 		return dao.getRowAsRegistro("EXEC cadastro.alteraStatusAparelho @id=?, @status=?",
 				new Object[] {param.getAsIntOrZero("id"), param.getAsString("status")});
+	}
+	
+	public Registro loginAparelhoMobile(Registro param) {
+		return dao.getRowAsRegistro("EXEC sistema.verificarLoginAparelho @aparelho=?, @senha=?",
+				new Object[] {param.getAsString("aparelho"), Criptografia.encripta(param.getAsString("senha"))});
 	}
 }

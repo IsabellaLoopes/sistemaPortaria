@@ -10,7 +10,9 @@ public class QrCodeDAO {
 	}
 
 	public Registro qrCode(Registro param) {
+		System.out.println(param);
+		System.out.println("qr code acima");
 		return dao.getRowAsRegistro("EXEC sistema.validarQrCode @qrCode=?, @aparelho=?",
-				new Object[] {param.getAsString("qrText"), param.getAsIntOrValue("aparelho", 1)});
+				new Object[] {param.getAsString("qrText"), param.getAsIntOrValue("aparelho", 0)});
 	}
 }

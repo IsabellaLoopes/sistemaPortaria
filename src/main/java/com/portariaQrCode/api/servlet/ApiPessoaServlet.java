@@ -56,6 +56,7 @@ public class ApiPessoaServlet extends HttpServlet {
 			dao.desconecta();
 		}
 		
+		resp.setContentType ("text/html;charset=utf-8");
 		HttpUtil.flushJSON(resp.getOutputStream(), retorno.toString());
 	}
 	

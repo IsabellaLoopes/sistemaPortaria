@@ -36,13 +36,11 @@ public class ApiLeituraQrServlet extends HttpServlet {
 		DAO dao = new DAO();
 		JSONObject retorno = new JSONObject();
 		Registro param = HttpServices.requestToRegistro(req);	
-		System.out.println("Juro que tô tentando entrar");
 		try {
 			dao.conecta();
 			if(banco.equals("leitura")) {
 				retorno.put("DATA", leitura(dao, param)); 
 			}
-			//retorno.put("PARAMETROS", param);
 			retorno.put("PARAMETROS", new Registro());
 		} catch (Exception e) {
 			e.printStackTrace();

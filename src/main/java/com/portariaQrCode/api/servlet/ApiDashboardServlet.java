@@ -45,13 +45,9 @@ public class ApiDashboardServlet extends HttpServlet {
 		Registro param = HttpServices.requestToRegistro(req);	
 		try {
 			dao.conecta();
-			System.out.println("SOCORRO");
-			System.out.println(param);
-			System.out.println("SOCORRO 2");
 			if(banco.equals("listar")) {
 				retorno.put("DATA", dashboardListar(dao, param)); 
 			}
-			
 			retorno.put("PARAMETROS", param);
 		} catch (Exception e) {
 			e.printStackTrace();

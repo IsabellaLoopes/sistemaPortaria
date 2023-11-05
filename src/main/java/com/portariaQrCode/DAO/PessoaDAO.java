@@ -39,4 +39,9 @@ public class PessoaDAO {
 		return dao.getRowAsRegistro("EXEC cadastro.salvarPerfil @id=?, @nome=?, @email=?, @tel=?",
 				new Object[] {param.getAsIntOrZero("id"), param.getAsString("nome"), param.getAsString("email"), param.getAsString("tel")});
 	}
+	
+	public Registro listarPessoaMobile(Registro param) {
+		return dao.getRowAsRegistro("EXEC cadastro.listarPessoaMobile @id=?", 
+				new Object[] {param.getAsIntOrZero("id")});
+	}
 }

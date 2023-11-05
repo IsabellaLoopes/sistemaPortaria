@@ -30,6 +30,8 @@ public class RelatorioAcessoDAO {
 	}
 	
 	public List<Registro> listarAcesso(Registro param) {
+		System.out.println("hahaha");
+		System.out.println(param);
 		return dao.listaRowAsRegistro("EXEC historico.listarLogAcessoEntradaSaida @data=?, @aparelho=?, @pessoa=?, @tipoPessoa=?, @situacao=?", 
 				new Object[] {param.getAsStringOrValue("data", ""), param.getAsIntOrZero("aparelho"), param.getAsIntOrZero("pessoa"), 
 								param.getAsStringOrValue("tipoPessoa", ""), param.getAsIntOrValue("situacao", -2)});

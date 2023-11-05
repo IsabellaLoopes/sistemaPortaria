@@ -2,7 +2,9 @@ package com.portariaQrCode.api.servlet;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,32 +15,39 @@ import javax.servlet.http.HttpServletResponse;
 import org.json.JSONObject;
 
 import com.portariaQrCode.DAO.DAO;
-import com.portariaQrCode.DAO.UsuarioDAO;
+import com.portariaQrCode.DAO.DashboardDAO;
+import com.portariaQrCode.DAO.PessoaDAO;
+import com.portariaQrCode.DAO.RelatorioAcessoDAO;
 import com.portariaQrCode.types.Registro;
 import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
 
-@WebServlet(description = "Login API", loadOnStartup = 5, urlPatterns = {"/api/login/entrar"})
-public class ApiLoginServlet extends HttpServlet {
+@WebServlet(description = "Pessoa API", loadOnStartup = 5, urlPatterns = {"/api/pessoa/dados"})
+public class ApiPessoaServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		if (req.getRequestURI().indexOf("api/login/entrar") > 0) {
-			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
-			processarDados(req, resp, HttpServices.HTTP_POST, "login");
-		}
+	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		doPost(req,resp);
 	}
-
+	
+	@Override
+	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+		if(req.getRequestURI().indexOf("api/pessoa/dados") > 0) {
+			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
+			processarDados(req, resp, HttpServices.HTTP_POST, "listar");
+		} 
+	}
+	
 	private void processarDados(HttpServletRequest req, HttpServletResponse resp, String method, String banco) throws ServletException, IOException {
 		DAO dao = new DAO();
 		JSONObject retorno = new JSONObject();
 		Registro param = HttpServices.requestToRegistro(req);	
 		try {
 			dao.conecta();
-			if(banco.equals("login")) {
-				retorno.put("DATA", login(dao, param)); 
+			if(banco.equals("listar")) {
+				retorno.put("DATA", pessoa(dao, param)); 
 			}
 			retorno.put("PARAMETROS", param);
 		} catch (Exception e) {
@@ -50,10 +59,10 @@ public class ApiLoginServlet extends HttpServlet {
 		HttpUtil.flushJSON(resp.getOutputStream(), retorno.toString());
 	}
 	
-	private Registro login(DAO dao, Registro param) {
+	private Registro pessoa(DAO dao, Registro param) {
 		Registro ret = new Registro();
 		try {
-			ret = new UsuarioDAO(dao).verificarLoginMobile(param);
+			ret = new PessoaDAO(dao).listarPessoaMobile(param);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -50,7 +50,7 @@ public class VisitaServlet extends HttpServlet {
 		} else if(req.getRequestURI().indexOf("cadastro/visitaListar") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			buscarDados(req, resp, HttpServices.HTTP_POST, "", "/WEB-INF/jsp/cadastro/visita/visitaListar.jsp", "listar");
-		} else if(req.getRequestURI().indexOf("cadastro/visitaListar") > 0) {
+		} else if(req.getRequestURI().indexOf("cadastro/visitaSaidaManual") > 0) {
 			req.setAttribute("data", new SimpleDateFormat("dd/MM/yyyy").format(new Date()));
 			processarDados(req, resp, HttpServices.HTTP_POST, "", "saidaManual");
 		}

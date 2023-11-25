@@ -40,7 +40,7 @@
 							<td>${l.viculado}</td>
 							<td>
 								<c:if test="${l.dataSaida == null}">
-									<a href="javascript: qrCode(${l.id}, '${l.cpf}', '${l.pessoa}')" class="btn btn-sm"><i class="bi bi-qr-code"></i></a>
+									<a href="javascript: qrCode(${l.pes_id}, '${l.cpf}', '${l.pessoa}')" class="btn btn-sm"><i class="bi bi-qr-code"></i></a>
 									<a href="javascript: saidaManual(${l.id})" class="btn btn-sm"><i class="bi bi-door-open-fill"></i></a>
 								</c:if>
 							</td>
@@ -75,13 +75,13 @@
 					  confirmButtonText: 'Ok'
 					})
 			}
-			pesquisarPessoa()
+			pesquisarVisita()
 		})
 	}
 	
 	function qrCode(id, cpf, nome){
 		let param = {
-				qrText: -2+"/"+cpf,
+				qrText: id+"/"+cpf,
 				nome: nome
 		}
 		

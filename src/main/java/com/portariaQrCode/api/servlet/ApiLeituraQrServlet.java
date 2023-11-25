@@ -3,6 +3,7 @@ package com.portariaQrCode.api.servlet;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,6 +17,7 @@ import com.portariaQrCode.DAO.DAO;
 import com.portariaQrCode.DAO.QrCodeDAO;
 import com.portariaQrCode.DAO.UsuarioDAO;
 import com.portariaQrCode.types.Registro;
+import com.portariaQrCode.util.Criptografia;
 import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
 
@@ -41,7 +43,8 @@ public class ApiLeituraQrServlet extends HttpServlet {
 			if(banco.equals("leitura")) {
 				retorno.put("DATA", leitura(dao, param)); 
 			}
-			retorno.put("PARAMETROS", new Registro());
+			dao.commit();
+			retorno.put("PARAMETROS", param);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {
@@ -54,7 +57,26 @@ public class ApiLeituraQrServlet extends HttpServlet {
 	
 	private Registro leitura(DAO dao, Registro param) {
 		Registro ret = new Registro();
+		ret.put("erro", -1);
+		ret.put("mensagem", "Erro ao ler qrCode!");
 		try {
+			List<Registro> qrs = new QrCodeDAO(dao).listarQrCodesExistente();
+			
+			for(Registro qr : qrs) {
+				System.out.println(param.getAsString("qrText"));
+				System.out.println(Criptografia.encripta(qr.getAsString("qrCode")));
+				System.out.println(qr.getAsString("qrCode"));
+				System.out.println("----------------------------");
+				if (Criptografia.encripta(qr.getAsString("qrCode")).equals(param.getAsString("qrText"))) {
+					param.put("qrText", qr.getAsString("qrCode"));
+					break;
+				} /*else {
+					param.put("qrText", "0/0");
+				}*/
+					
+				
+			}
+			System.out.println(param);
 			ret = new QrCodeDAO(dao).qrCode(param);
 		} catch (Exception e) {
 			e.printStackTrace();

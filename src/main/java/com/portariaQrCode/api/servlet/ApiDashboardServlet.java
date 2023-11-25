@@ -49,6 +49,7 @@ public class ApiDashboardServlet extends HttpServlet {
 				retorno.put("DATA", dashboardListar(dao, param)); 
 			}
 			retorno.put("PARAMETROS", param);
+			System.out.println(param);
 		} catch (Exception e) {
 			e.printStackTrace();
 		} finally {

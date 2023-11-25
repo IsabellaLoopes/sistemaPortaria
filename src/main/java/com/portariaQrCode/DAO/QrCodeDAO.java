@@ -1,5 +1,7 @@
 package com.portariaQrCode.DAO;
 
+import java.util.List;
+
 import com.portariaQrCode.types.Registro;
 
 public class QrCodeDAO {
@@ -10,9 +12,11 @@ public class QrCodeDAO {
 	}
 
 	public Registro qrCode(Registro param) {
-		System.out.println(param);
-		System.out.println("qr code acima");
 		return dao.getRowAsRegistro("EXEC sistema.validarQrCode @qrCode=?, @aparelho=?",
 				new Object[] {param.getAsString("qrText"), param.getAsIntOrValue("aparelho", 0)});
+	}
+	
+	public List<Registro> listarQrCodesExistente(){
+		return dao.listaRowAsRegistro("EXEC cadastro.listarQrCodesExistente");
 	}
 }

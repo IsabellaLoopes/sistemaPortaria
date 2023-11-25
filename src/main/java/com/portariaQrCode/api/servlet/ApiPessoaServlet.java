@@ -19,6 +19,7 @@ import com.portariaQrCode.DAO.DashboardDAO;
 import com.portariaQrCode.DAO.PessoaDAO;
 import com.portariaQrCode.DAO.RelatorioAcessoDAO;
 import com.portariaQrCode.types.Registro;
+import com.portariaQrCode.util.Criptografia;
 import com.portariaQrCode.util.HttpServices;
 import com.portariaQrCode.util.HttpUtil;
 
@@ -64,6 +65,7 @@ public class ApiPessoaServlet extends HttpServlet {
 		Registro ret = new Registro();
 		try {
 			ret = new PessoaDAO(dao).listarPessoaMobile(param);
+			ret.put("qrTexto", Criptografia.encripta(ret.getAsString("pes_id")+"/"+ret.getAsString("pes_cpf")));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
